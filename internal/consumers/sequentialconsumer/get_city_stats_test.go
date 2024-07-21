@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/thtg88/1brc/internal/builders"
 	"github.com/thtg88/1brc/internal/configs"
@@ -20,12 +21,14 @@ func TestSequentialConsumer_GetCityStats(t *testing.T) {
 		logger := loggermock.NewLoggerMock()
 		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
-		wantErrMsg := fmt.Sprintf("%s city stats not found", reading.City)
+
+		expectedErr := fmt.Errorf("%s city stats not found", builders.TemperatureReadingBuilder_TestCity)
 
 		actualCityStats, err := consumer.GetCityStats(reading.City)
 
 		require.Equal(t, models.CityStats{}, actualCityStats)
-		require.Error(t, err, wantErrMsg)
+		assert.Error(t, err)
+		require.Equal(t, expectedErr, err)
 	})
 
 	t.Run("1 reading returns correct city stats", func(t *testing.T) {

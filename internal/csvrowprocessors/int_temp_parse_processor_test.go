@@ -4,6 +4,7 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/thtg88/1brc/internal/builders"
 	"github.com/thtg88/1brc/internal/csvrowprocessors"
@@ -32,9 +33,9 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 		reading, err := processor.Process(row)
 
-		require.Error(t, err)
-		require.Equal(t, errors.New("row length not 2: 0"), err)
 		require.Nil(t, reading)
+		assert.Error(t, err)
+		require.Equal(t, errors.New("row length not 2: 0"), err)
 	})
 
 	t.Run("row with length 1 returns an error", func(t *testing.T) {
@@ -44,9 +45,9 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 		reading, err := processor.Process(row)
 
-		require.Error(t, err)
-		require.Equal(t, errors.New("row length not 2: 1"), err)
 		require.Nil(t, reading)
+		assert.Error(t, err)
+		require.Equal(t, errors.New("row length not 2: 1"), err)
 	})
 
 	t.Run("row with length 3 returns an error", func(t *testing.T) {
@@ -56,9 +57,9 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 		reading, err := processor.Process(row)
 
-		require.Error(t, err)
-		require.Equal(t, errors.New("row length not 2: 3"), err)
 		require.Nil(t, reading)
+		assert.Error(t, err)
+		require.Equal(t, errors.New("row length not 2: 3"), err)
 	})
 
 	t.Run("invalid temperature returns an error", func(t *testing.T) {
@@ -66,10 +67,12 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 		processor := csvrowprocessors.NewIntTempParseProcessor()
 		row := []string{builders.TemperatureReadingBuilder_TestCity, "not a temperature"}
 
+		expectedErr := errors.New("could not parse temperature: strconv.ParseInt: parsing \"not a temperatue\": invalid syntax")
+
 		reading, err := processor.Process(row)
 
-		require.Error(t, err)
-		require.Equal(t, errors.New("could not parse temperature: strconv.ParseInt: parsing \"not a temperatue\": invalid syntax"), err)
 		require.Nil(t, reading)
+		assert.Error(t, err)
+		require.Equal(t, expectedErr, err)
 	})
 }
