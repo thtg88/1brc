@@ -22,6 +22,11 @@ func (sp *SingleProducer) Start() {
 			rowNumber++
 			continue
 		}
+		if len(row) != 2 {
+			sp.Logger.Println("row %d length not 2: %d", rowNumber, len(row))
+			rowNumber++
+			continue
+		}
 		// empty last row
 		if row[1] == "" {
 			rowNumber++
