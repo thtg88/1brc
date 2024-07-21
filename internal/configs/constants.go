@@ -1,7 +1,7 @@
 package configs
 
 const (
-	DefaultBufferedChannelSize      = 300_000
+	DefaultBufferedChannelSize      = 50_000
 	DefaultDebug                    = false
 	DefaultLimit                    = 999_999_000
 	DefaultProfileEnabled           = false
