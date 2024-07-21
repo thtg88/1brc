@@ -11,7 +11,7 @@ const (
 	DefaultProgressSleepDurationMs  = 10_000
 	DefaultShouldReportProgress     = true
 
-	DefaultStatsDestinationFilePath = "./data/stats.csv"
-	DefaultTemperaturesFilePath     = "./data/temperatures.csv"
-	DefaultWeatherStationsFilePath  = "./data/weather_stations.csv"
+	DefaultStatsFilePath           = "./data/stats.csv"
+	DefaultTemperaturesFilePath    = "./data/temperatures.csv"
+	DefaultWeatherStationsFilePath = "./data/weather_stations.csv"
 )
