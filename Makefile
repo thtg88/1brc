@@ -1,4 +1,4 @@
-.PHONY: all build install fmt fmt/check lint lint/govet test
+.PHONY: all build build/all build/datagenerator install fmt fmt/check lint lint/govet test
 
 # Install binaries into ./bin rather than $GOPATH/bin to avoid conflicts
 GOBIN=$(shell pwd)/bin
@@ -9,8 +9,12 @@ export PATH := $(GOBIN):$(PATH)
 
 all: install
 
-# TODO: build each cmd package into separate executables
-build: install
+build: install build/all
+
+build/all: install build/datagenerator
+
+build/datagenerator: install
+	go build -o csv-data-generator cmd/csv-data-generator/main.go
 
 install:
 	go install -mod=vendor -v ./...
