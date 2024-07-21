@@ -17,7 +17,7 @@ func TestNewDefaultSolverConfig(t *testing.T) {
 		Limit:               configs.DefaultLimit,
 		SourceFilePath:      configs.DefaultTemperaturesFilePath,
 		Profile: &configs.ProfileSolverConfig{
-			Enabled:           true,
+			Enabled:           configs.DefaultProfileEnabled,
 			CPUFilePath:       configs.DefaultProfileCPUFilePath,
 			ExecutionFilePath: configs.DefaultProfileExecutionFilePath,
 			MemoryFilePath:    configs.DefaultProfileMemoryFilePath,
