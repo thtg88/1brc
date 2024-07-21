@@ -5,6 +5,7 @@ import (
 )
 
 func (sp *SingleProducer) Start() {
+	rowNumber := 1
 	for {
 		if sp.RecordsProduced >= sp.Config.Limit {
 			break
@@ -18,10 +19,12 @@ func (sp *SingleProducer) Start() {
 			sp.Logger.Fatalf("could not read from CSV file: %v", err)
 		}
 		if row == nil {
+			rowNumber++
 			continue
 		}
 		// empty last row
 		if row[1] == "" {
+			rowNumber++
 			continue
 		}
 
@@ -37,6 +40,7 @@ func (sp *SingleProducer) Start() {
 		sp.DataChannel <- reading
 
 		sp.RecordsProduced++
+		rowNumber++
 	}
 
 	sp.DoneChannel <- true
