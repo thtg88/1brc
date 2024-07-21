@@ -3,7 +3,7 @@ package configs
 const (
 	DefaultBufferedChannelSize      = 300_000
 	DefaultDebug                    = false
-	DefaultLimit                    = 1_000_000_000
+	DefaultLimit                    = 999_999_000
 	DefaultProfileEnabled           = true
 	DefaultProfileCPUFilePath       = "./profiles/cpuprofile"
 	DefaultProfileExecutionFilePath = "./profiles/exeprofile"
