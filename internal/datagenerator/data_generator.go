@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/thtg88/1brc/internal/configs"
 	"github.com/thtg88/1brc/internal/loggers"
 	"github.com/thtg88/1brc/internal/temperatureswriter"
 	"github.com/thtg88/1brc/internal/weatherstationsreader"
@@ -11,19 +12,18 @@ import (
 
 type DataGenerator struct {
 	logger loggers.Logger
+	config *configs.DataGeneratorConfig
 }
 
-const (
-	DestinationFilePath = "./data/temperatures.csv"
-	SourceFilePath      = "./data/weather_stations.csv"
-)
-
-func NewDataGenerator(logger loggers.Logger) *DataGenerator {
-	return &DataGenerator{logger: logger}
+func NewDataGenerator(logger loggers.Logger, config *configs.DataGeneratorConfig) *DataGenerator {
+	return &DataGenerator{
+		logger: logger,
+		config: config,
+	}
 }
 
 func (dg *DataGenerator) Generate() {
-	sourceFile, err := os.Open(SourceFilePath)
+	sourceFile, err := os.Open(dg.config.SourceFilePath)
 	if err != nil {
 		log.Fatalf("could not open weather_stations.csv: %v", err)
 	}
@@ -39,7 +39,7 @@ func (dg *DataGenerator) Generate() {
 	dg.logger.Println("cities file read!")
 	dg.logger.Println("writing to temperature file...")
 
-	destinationFile, err := os.Create(DestinationFilePath)
+	destinationFile, err := os.Create(dg.config.DestinationFilePath)
 	if err != nil {
 		dg.logger.Fatalf("could not create temperatures.csv: %v", err)
 	}
