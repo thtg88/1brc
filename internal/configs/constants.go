@@ -4,7 +4,7 @@ const (
 	DefaultBufferedChannelSize      = 300_000
 	DefaultDebug                    = false
 	DefaultLimit                    = 999_999_000
-	DefaultProfileEnabled           = true
+	DefaultProfileEnabled           = false
 	DefaultProfileCPUFilePath       = "./profiles/cpuprofile"
 	DefaultProfileExecutionFilePath = "./profiles/exeprofile"
 	DefaultProfileMemoryFilePath    = "./profiles/memprofile"
