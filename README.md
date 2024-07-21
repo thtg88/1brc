@@ -7,3 +7,12 @@ This repository provides a few possible solutions to the 1BRC problem, as origin
 > A fun exploration of how quickly 1B rows from a text file can be aggregated
 
 But here they are implemented in Golang (instead of Java).
+
+## Requirements
+
+Go 1.22. You can install and use it using [gvm](https://github.com/moovweb/gvm) with:
+
+```bash
+gvm install go1.22
+gvm use go1.22
+```
