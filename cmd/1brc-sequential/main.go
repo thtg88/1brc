@@ -11,7 +11,7 @@ import (
 
 func main() {
 	config := configs.NewDefaultSolverConfig()
-	logger := log.New(os.Stdout, "", log.Lshortfile)
+	logger := log.New(os.Stdout, "", log.Lshortfile|log.Ltime)
 	csvResultsWriter := resultswriters.NewCSVWriter(config.DestinationFilePath)
 	solver := sequentialsolver.NewSequentialSolver(config, csvResultsWriter, logger)
 
