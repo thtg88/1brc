@@ -76,3 +76,11 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 		require.Equal(t, expectedErr, err)
 	})
 }
+
+func BenchmarkIntTempParseProcessor_Process(b *testing.B) {
+	processor := csvrowprocessors.NewIntTempParseProcessor()
+	row := []string{builders.TemperatureReadingBuilder_TestCity, "12.3"}
+	for i := 0; i < b.N; i++ {
+		processor.Process(row)
+	}
+}
