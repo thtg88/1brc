@@ -1,6 +1,7 @@
 package nilconsumer_test
 
 import (
+	"sync"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -58,10 +59,18 @@ func TestNilConsumer_Start(t *testing.T) {
 			consumer := nilconsumer.NewNilConsumer(dataChannel, doneChannel, mockLogger, config)
 
 			go func() {
+				var wg sync.WaitGroup
 				for i := 0; i < int(tc.expectedRecordsConsumed); i++ {
-					reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
-					dataChannel <- reading
+					wg.Add(1)
+					go func() {
+						defer wg.Done()
+
+						reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+						dataChannel <- reading
+					}()
 				}
+
+				wg.Wait()
 
 				close(dataChannel)
 			}()
@@ -83,10 +92,18 @@ func BenchmarkNilConsumer_Start(b *testing.B) {
 	consumer := nilconsumer.NewNilConsumer(dataChannel, doneChannel, mockLogger, config)
 
 	go func() {
+		var wg sync.WaitGroup
 		for i := 0; i < int(b.N); i++ {
-			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
-			dataChannel <- reading
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+
+				reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+				dataChannel <- reading
+			}()
 		}
+
+		wg.Wait()
 
 		close(dataChannel)
 	}()
