@@ -8,7 +8,7 @@ import (
 func (ss *SequentialSolver) Start() {
 	file, err := os.Open(ss.Config.SourceFilePath)
 	if err != nil {
-		ss.Logger.Fatalf("could not create temperatures.csv: %v", err)
+		ss.Logger.Fatalf("could not open temperatures.csv: %v", err)
 	}
 	defer file.Close()
 

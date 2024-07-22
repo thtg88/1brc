@@ -16,8 +16,8 @@ func NewCSVWriter(destinationFilePath string) *CSVWriter {
 	return &CSVWriter{DestinationFilePath: destinationFilePath}
 }
 
-func (crw *CSVWriter) Write(sortedStats []models.CityStats) error {
-	destinationFile, err := os.Create(crw.DestinationFilePath)
+func (cw *CSVWriter) Write(sortedStats []models.CityStats) error {
+	destinationFile, err := os.Create(cw.DestinationFilePath)
 	if err != nil {
 		return fmt.Errorf("could not create stats.csv: %v", err)
 	}

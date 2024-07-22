@@ -14,6 +14,7 @@ func TestNilConsumer_ProcessReading(t *testing.T) {
 
 	t.Run("more than 0 readings does not add to stats", func(t *testing.T) {
 		t.Parallel()
+
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		mockLogger := loggermock.NewLoggerMock()
 		consumer := buildNilConsumer(nil, mockLogger)
