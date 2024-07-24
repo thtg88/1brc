@@ -3,7 +3,7 @@ package builders_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"github.com/thtg88/1brc/internal/builders"
 )
 
@@ -13,7 +13,7 @@ func TestTemperatureReadingBuilder_Build(t *testing.T) {
 	builder := builders.NewTemperatureReadingBuilder()
 	reading := builder.Build()
 
-	assert.Equal(t, "", reading.City)
+	require.Equal(t, "", reading.City)
 	require.Zero(t, reading.Temperature)
 }
 
@@ -24,7 +24,7 @@ func TestTemperatureReadingBuilder_WithCity(t *testing.T) {
 	builder := builders.NewTemperatureReadingBuilder().WithCity(anotherCity)
 	reading := builder.Build()
 
-	assert.Equal(t, anotherCity, reading.City)
+	require.Equal(t, anotherCity, reading.City)
 	require.Zero(t, reading.Temperature)
 }
 
@@ -35,8 +35,8 @@ func TestTemperatureReadingBuilder_WithTemperature(t *testing.T) {
 	builder := builders.NewTemperatureReadingBuilder().WithTemperature(temperature)
 	reading := builder.Build()
 
-	assert.Equal(t, "", reading.City)
-	assert.Equal(t, temperature, reading.Temperature)
+	require.Equal(t, "", reading.City)
+	require.Equal(t, temperature, reading.Temperature)
 }
 
 func TestTemperatureReadingBuilder_WithTestValues(t *testing.T) {
@@ -45,6 +45,6 @@ func TestTemperatureReadingBuilder_WithTestValues(t *testing.T) {
 	builder := builders.NewTemperatureReadingBuilder().WithTestValues()
 	reading := builder.Build()
 
-	assert.Equal(t, builders.TemperatureReadingBuilder_TestCity, reading.City)
-	assert.Equal(t, builders.TemperatureReadingBuilder_TestTemperature, reading.Temperature)
+	require.Equal(t, builders.TemperatureReadingBuilder_TestCity, reading.City)
+	require.Equal(t, builders.TemperatureReadingBuilder_TestTemperature, reading.Temperature)
 }
