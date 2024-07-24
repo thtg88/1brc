@@ -28,7 +28,9 @@ func TestLogSleepReporter_ConsumerReport(t *testing.T) {
 
 		progressReporter.ConsumerReport(consumer)
 
-		require.Equal(t, mockLogger.GetPrintfCalls(), uint64(0))
+		actualPrintfCalls := mockLogger.GetPrintfCalls()
+
+		require.Zero(t, actualPrintfCalls)
 	})
 
 	t.Run("Enabled config set to true logs", func(t *testing.T) {
@@ -46,7 +48,9 @@ func TestLogSleepReporter_ConsumerReport(t *testing.T) {
 		time.Sleep(500 * time.Millisecond)
 		progressReporter.Stop()
 
-		require.Equal(t, mockLogger.GetPrintfCalls(), uint64(1))
+		actualPrintfCalls := mockLogger.GetPrintfCalls()
+
+		require.Equal(t, uint64(1), actualPrintfCalls)
 	})
 }
 
@@ -63,7 +67,9 @@ func TestLogSleepReporter_ProducerReport(t *testing.T) {
 
 		progressReporter.ProducerReport(producer)
 
-		require.Equal(t, mockLogger.GetPrintfCalls(), uint64(0))
+		actualPrintfCalls := mockLogger.GetPrintfCalls()
+
+		require.Zero(t, actualPrintfCalls)
 	})
 
 	t.Run("Enabled config set to true logs", func(t *testing.T) {
@@ -81,7 +87,9 @@ func TestLogSleepReporter_ProducerReport(t *testing.T) {
 		time.Sleep(500 * time.Millisecond)
 		progressReporter.Stop()
 
-		require.Equal(t, mockLogger.GetPrintfCalls(), uint64(1))
+		actualPrintfCalls := mockLogger.GetPrintfCalls()
+
+		require.Equal(t, uint64(1), actualPrintfCalls)
 	})
 }
 
