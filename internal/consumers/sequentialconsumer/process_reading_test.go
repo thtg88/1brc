@@ -51,6 +51,6 @@ func TestSequentialConsumer_ProcessReading(t *testing.T) {
 		consumer.ProcessReading(reading)
 		consumer.ProcessReading(reading)
 
-		require.Equal(t, uint64(0), logger.GetPrintfCalls())
+		require.Zero(t, logger.GetPrintfCalls())
 	})
 }

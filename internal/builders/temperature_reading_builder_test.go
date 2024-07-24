@@ -14,7 +14,7 @@ func TestTemperatureReadingBuilder_Build(t *testing.T) {
 	reading := builder.Build()
 
 	assert.Equal(t, "", reading.City)
-	assert.Equal(t, int64(0), reading.Temperature)
+	require.Zero(t, reading.Temperature)
 }
 
 func TestTemperatureReadingBuilder_WithCity(t *testing.T) {
@@ -25,7 +25,7 @@ func TestTemperatureReadingBuilder_WithCity(t *testing.T) {
 	reading := builder.Build()
 
 	assert.Equal(t, anotherCity, reading.City)
-	assert.Equal(t, int64(0), reading.Temperature)
+	require.Zero(t, reading.Temperature)
 }
 
 func TestTemperatureReadingBuilder_WithTemperature(t *testing.T) {

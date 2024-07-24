@@ -17,7 +17,7 @@ func TestNilConsumer_GetRecordsConsumed(t *testing.T) {
 
 		actualRecordsConsumed := consumer.GetRecordsConsumed()
 
-		require.Equal(t, uint64(0), actualRecordsConsumed)
+		require.Zero(t, actualRecordsConsumed)
 	})
 
 	t.Run("n readings returns n records consumed", func(t *testing.T) {
