@@ -41,7 +41,7 @@ func TestSequentialConsumer_ProcessReading(t *testing.T) {
 		require.Equal(t, uint64(2), logger.GetPrintfCalls())
 	})
 
-	t.Run("successful reading processing with debug off", func(t *testing.T) {
+	t.Run("reading processing with debug off does not log", func(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
