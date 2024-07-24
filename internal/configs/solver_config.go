@@ -2,7 +2,7 @@ package configs
 
 type ProgressSolverConfig struct {
 	SleepDurationMs uint64
-	ShouldReport    bool
+	Enabled         bool
 }
 
 type ProfileSolverConfig struct {
@@ -37,7 +37,7 @@ func NewDefaultSolverConfig() *SolverConfig {
 		},
 		Progress: &ProgressSolverConfig{
 			SleepDurationMs: DefaultProgressSleepDurationMs,
-			ShouldReport:    DefaultShouldReportProgress,
+			Enabled:         DefaultProgressEnabled,
 		},
 	}
 }

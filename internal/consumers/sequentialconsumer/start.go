@@ -7,7 +7,7 @@ func (sc *SequentialConsumer) Start() {
 		select {
 		case reading, more := <-sc.DataChannel:
 			if !more {
-				sc.Config.Progress.ShouldReport = false
+				sc.Config.Progress.Enabled = false
 
 				sc.Logger.Println("consumer channel closed")
 
@@ -16,7 +16,7 @@ func (sc *SequentialConsumer) Start() {
 
 			sc.ProcessReading(reading)
 		case <-sc.DoneChannel:
-			sc.Config.Progress.ShouldReport = false
+			sc.Config.Progress.Enabled = false
 
 			sc.Logger.Println("done channel closed")
 

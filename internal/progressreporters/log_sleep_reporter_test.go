@@ -18,7 +18,7 @@ import (
 func TestLogSleepReporter_ConsumerReport(t *testing.T) {
 	t.Parallel()
 
-	t.Run("ShouldReport config set to false does not log anything", func(t *testing.T) {
+	t.Run("Enabled config set to false does not log anything", func(t *testing.T) {
 		t.Parallel()
 
 		config := buildNilConsumerConfig(false)
@@ -31,7 +31,7 @@ func TestLogSleepReporter_ConsumerReport(t *testing.T) {
 		require.Equal(t, mockLogger.GetPrintfCalls(), uint64(0))
 	})
 
-	t.Run("ShouldReport config set to true logs", func(t *testing.T) {
+	t.Run("Enabled config set to true logs", func(t *testing.T) {
 		t.Parallel()
 
 		config := buildNilConsumerConfig(true)
@@ -53,7 +53,7 @@ func TestLogSleepReporter_ConsumerReport(t *testing.T) {
 func TestLogSleepReporter_ProducerReport(t *testing.T) {
 	t.Parallel()
 
-	t.Run("ShouldReport config set to false does not log anything", func(t *testing.T) {
+	t.Run("Enabled config set to false does not log anything", func(t *testing.T) {
 		t.Parallel()
 
 		config := buildNilProducerConfig(false)
@@ -66,7 +66,7 @@ func TestLogSleepReporter_ProducerReport(t *testing.T) {
 		require.Equal(t, mockLogger.GetPrintfCalls(), uint64(0))
 	})
 
-	t.Run("ShouldReport config set to true logs", func(t *testing.T) {
+	t.Run("Enabled config set to true logs", func(t *testing.T) {
 		t.Parallel()
 
 		config := buildNilProducerConfig(true)
@@ -85,7 +85,7 @@ func TestLogSleepReporter_ProducerReport(t *testing.T) {
 	})
 }
 
-func TestLogSleepReporter_ShouldReportProgress(t *testing.T) {
+func TestLogSleepReporter_Enabled(t *testing.T) {
 	t.Parallel()
 
 	t.Run("false config returns false", func(t *testing.T) {
@@ -95,7 +95,7 @@ func TestLogSleepReporter_ShouldReportProgress(t *testing.T) {
 		mockLogger := loggermock.NewLoggerMock()
 		progressReporter := progressreporters.NewLogSleepReporter(mockLogger, config.Progress)
 
-		shouldReport := progressReporter.ShouldReportProgress()
+		shouldReport := progressReporter.Enabled()
 
 		require.False(t, shouldReport)
 	})
@@ -107,7 +107,7 @@ func TestLogSleepReporter_ShouldReportProgress(t *testing.T) {
 		mockLogger := loggermock.NewLoggerMock()
 		progressReporter := progressreporters.NewLogSleepReporter(mockLogger, config.Progress)
 
-		shouldReport := progressReporter.ShouldReportProgress()
+		shouldReport := progressReporter.Enabled()
 
 		require.True(t, shouldReport)
 	})
@@ -120,11 +120,11 @@ func TestLogSleepReporter_Stop(t *testing.T) {
 	mockLogger := loggermock.NewLoggerMock()
 	progressReporter := progressreporters.NewLogSleepReporter(mockLogger, config.Progress)
 
-	shouldReport := progressReporter.ShouldReportProgress()
+	shouldReport := progressReporter.Enabled()
 	require.True(t, shouldReport)
 
 	progressReporter.Stop()
-	shouldReport = progressReporter.ShouldReportProgress()
+	shouldReport = progressReporter.Enabled()
 
 	require.False(t, shouldReport)
 }
@@ -135,10 +135,10 @@ func buildNilConsumer(config *configs.SolverConfig, logger loggers.Logger) *nilc
 	return nilconsumer.NewNilConsumer(dataChannel, doneChannel, logger, config)
 }
 
-func buildNilConsumerConfig(shouldReportProgress bool) *configs.SolverConfig {
+func buildNilConsumerConfig(enabled bool) *configs.SolverConfig {
 	return &configs.SolverConfig{
 		Progress: &configs.ProgressSolverConfig{
-			ShouldReport:    shouldReportProgress,
+			Enabled:         enabled,
 			SleepDurationMs: 1000,
 		},
 	}
@@ -151,10 +151,10 @@ func buildNilProducer(config *configs.SolverConfig, logger loggers.Logger) *nilp
 	return nilproducer.NewNilProducer(csvReader, dataChannel, doneChannel, logger, config)
 }
 
-func buildNilProducerConfig(shouldReportProgress bool) *configs.SolverConfig {
+func buildNilProducerConfig(enabled bool) *configs.SolverConfig {
 	return &configs.SolverConfig{
 		Progress: &configs.ProgressSolverConfig{
-			ShouldReport:    shouldReportProgress,
+			Enabled:         enabled,
 			SleepDurationMs: 1000,
 		},
 	}

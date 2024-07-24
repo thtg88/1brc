@@ -28,7 +28,7 @@ func NewLogSleepReporter(logger loggers.Logger, config *configs.ProgressSolverCo
 
 func (lsr *LogSleepReporter) ConsumerReport(consumer consumers.Consumer) {
 	for {
-		if !lsr.ShouldReportProgress() {
+		if !lsr.Enabled() {
 			return
 		}
 
@@ -40,7 +40,7 @@ func (lsr *LogSleepReporter) ConsumerReport(consumer consumers.Consumer) {
 
 func (lsr *LogSleepReporter) ProducerReport(producer producers.Producer) {
 	for {
-		if !lsr.ShouldReportProgress() {
+		if !lsr.Enabled() {
 			return
 		}
 
@@ -50,10 +50,10 @@ func (lsr *LogSleepReporter) ProducerReport(producer producers.Producer) {
 	}
 }
 
-func (lsr *LogSleepReporter) ShouldReportProgress() bool {
-	return lsr.config.ShouldReport
+func (lsr *LogSleepReporter) Enabled() bool {
+	return lsr.config.Enabled
 }
 
 func (lsr *LogSleepReporter) Stop() {
-	lsr.config.ShouldReport = false
+	lsr.config.Enabled = false
 }

@@ -24,7 +24,7 @@ func TestNewDefaultSolverConfig(t *testing.T) {
 		},
 		Progress: &configs.ProgressSolverConfig{
 			SleepDurationMs: configs.DefaultProgressSleepDurationMs,
-			ShouldReport:    configs.DefaultShouldReportProgress,
+			Enabled:         configs.DefaultProgressEnabled,
 		},
 	}
 
