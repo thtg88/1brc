@@ -40,3 +40,23 @@ The data channel is read by a consumer in a separate goroutine, which aggregates
 Once both the producer and consumer goroutines have completed, the slice of `CityStats`, sorted by city, is returned, and written back to disk in CSV format.
 
 This solution processes 1B rows in ~7m30s.
+
+## Buffered Sequential Solution
+
+This is contained under the [cmd/1brc-buffered-sequential/main.go](cmd/1brc-buffered-sequential/main.go) command.
+
+Build it with:
+
+```bash
+go build -o 1brc-buffered-sequential cmd/1brc-buffered-sequential/main.go
+```
+
+Run it with:
+
+```bash
+./1brc-buffered-sequential
+```
+
+This solution works similarly to the [Sequential Solution one](#sequential-solution), with the exception that temperature readings are produced and consumed on a buffered channel.
+
+This solution processes 1B rows in ~5m.
