@@ -16,7 +16,7 @@ func TestSequentialConsumer_GetSortedCities(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 
 		actualCities := consumer.GetSortedCities()
 
@@ -27,7 +27,7 @@ func TestSequentialConsumer_GetSortedCities(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		consumer.ProcessReading(reading)
 
@@ -42,7 +42,7 @@ func TestSequentialConsumer_GetSortedCities(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		consumer.ProcessReading(reading)
 		consumer.ProcessReading(reading)
@@ -59,7 +59,7 @@ func TestSequentialConsumer_GetSortedCities(t *testing.T) {
 
 		const anotherCity = "another city"
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading1 := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		reading2 := builders.NewTemperatureReadingBuilder().WithCity(anotherCity).Build()
 		consumer.ProcessReading(reading1)

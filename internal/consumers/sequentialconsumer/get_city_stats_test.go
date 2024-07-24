@@ -19,7 +19,7 @@ func TestSequentialConsumer_GetCityStats(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 
 		expectedErr := fmt.Errorf("%s city stats not found", builders.TemperatureReadingBuilder_TestCity)
@@ -35,7 +35,7 @@ func TestSequentialConsumer_GetCityStats(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		consumer.ProcessReading(reading)
 
@@ -58,7 +58,7 @@ func TestSequentialConsumer_GetCityStats(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		consumer.ProcessReading(reading)
 		consumer.ProcessReading(reading)
@@ -83,7 +83,7 @@ func TestSequentialConsumer_GetCityStats(t *testing.T) {
 
 		const anotherCity = "another city"
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading1 := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		reading2 := builders.NewTemperatureReadingBuilder().WithCity(anotherCity).Build()
 		consumer.ProcessReading(reading1)
@@ -103,5 +103,4 @@ func TestSequentialConsumer_GetCityStats(t *testing.T) {
 		require.NoError(t, err)
 		require.Equal(t, expectedCityStats, actualCityStats)
 	})
-
 }

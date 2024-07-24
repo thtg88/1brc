@@ -45,7 +45,7 @@ func TestSequentialConsumer_ProcessReading(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
-		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: false}, logger)
+		consumer := buildSequentialConsumer(&configs.SolverConfig{}, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 
 		consumer.ProcessReading(reading)
