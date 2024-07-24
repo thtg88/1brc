@@ -12,10 +12,10 @@ type BufferedSequentialSolver struct {
 	Logger           loggers.Logger
 }
 
-func NewBufferedSequentialSolver(config *configs.SolverConfig, logger loggers.Logger) *BufferedSequentialSolver {
+func NewBufferedSequentialSolver(config *configs.SolverConfig, logger loggers.Logger, csvResultsWriter resultswriters.Writer) *BufferedSequentialSolver {
 	return &BufferedSequentialSolver{
 		Config:           config,
-		CSVResultsWriter: resultswriters.NewCSVWriter(config.DestinationFilePath),
+		CSVResultsWriter: csvResultsWriter,
 		Logger:           logger,
 	}
 }
