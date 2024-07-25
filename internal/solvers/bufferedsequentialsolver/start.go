@@ -60,7 +60,7 @@ func (bss *BufferedSequentialSolver) Start() {
 
 	bss.Logger.Println("writing results...")
 
-	err = bss.CSVResultsWriter.Write(sortedStats)
+	err = bss.ResultsWriter.Write(sortedStats)
 	if err != nil {
 		bss.Logger.Fatalf("%v", err)
 	}

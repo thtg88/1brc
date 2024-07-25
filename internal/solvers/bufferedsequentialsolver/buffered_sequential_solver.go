@@ -8,14 +8,14 @@ import (
 
 type BufferedSequentialSolver struct {
 	Config           *configs.SolverConfig
-	CSVResultsWriter resultswriters.Writer
 	Logger           loggers.Logger
+	ResultsWriter    resultswriters.Writer
 }
 
-func NewBufferedSequentialSolver(config *configs.SolverConfig, logger loggers.Logger, csvResultsWriter resultswriters.Writer) *BufferedSequentialSolver {
+func NewBufferedSequentialSolver(config *configs.SolverConfig, logger loggers.Logger, resultsWriter resultswriters.Writer) *BufferedSequentialSolver {
 	return &BufferedSequentialSolver{
 		Config:           config,
-		CSVResultsWriter: csvResultsWriter,
 		Logger:           logger,
+		ResultsWriter:    resultsWriter,
 	}
 }
