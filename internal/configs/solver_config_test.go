@@ -11,11 +11,12 @@ func TestNewDefaultSolverConfig(t *testing.T) {
 	t.Parallel()
 
 	wantConfig := &configs.SolverConfig{
-		BufferedChannelSize: configs.DefaultBufferedChannelSize,
-		Debug:               configs.DefaultDebug,
-		DestinationFilePath: configs.DefaultStatsFilePath,
-		Limit:               configs.DefaultLimit,
-		SourceFilePath:      configs.DefaultTemperaturesFilePath,
+		BufferedChannelSize:            configs.DefaultBufferedChannelSize,
+		CalculateAverageForEachReading: configs.DefaultCalculateAverageForEachReading,
+		Debug:                          configs.DefaultDebug,
+		DestinationFilePath:            configs.DefaultStatsFilePath,
+		Limit:                          configs.DefaultLimit,
+		SourceFilePath:                 configs.DefaultTemperaturesFilePath,
 		Profile: &configs.ProfileSolverConfig{
 			Enabled:           configs.DefaultProfileEnabled,
 			CPUFilePath:       configs.DefaultProfileCPUFilePath,

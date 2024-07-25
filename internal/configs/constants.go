@@ -1,9 +1,10 @@
 package configs
 
 const (
-	DefaultBufferedChannelSize = 50_000
-	DefaultDebug               = false
-	DefaultLimit               = 999_999_000
+	DefaultBufferedChannelSize            = 50_000
+	DefaultCalculateAverageForEachReading = false
+	DefaultDebug                          = false
+	DefaultLimit                          = 999_999_000
 
 	DefaultStatsFilePath           = "./data/stats.csv"
 	DefaultTemperaturesFilePath    = "./data/temperatures.csv"

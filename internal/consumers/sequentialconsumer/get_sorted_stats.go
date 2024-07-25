@@ -3,7 +3,7 @@ package sequentialconsumer
 import "github.com/thtg88/1brc/internal/models"
 
 func (sc *SequentialConsumer) GetSortedStats() []models.CityStats {
-	stats := sc.Stats
+	stats := sc.GetStats()
 
 	// Sort cities so that we are inserting stats in city's alphabetical order
 	cities := sc.GetSortedCities()

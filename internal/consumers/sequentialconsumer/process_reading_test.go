@@ -13,11 +13,41 @@ import (
 func TestSequentialConsumer_ProcessReading(t *testing.T) {
 	t.Parallel()
 
-	t.Run("successful reading processing", func(t *testing.T) {
+	t.Run("successful reading processing - CalculateAverageForEachReading false", func(t *testing.T) {
 		t.Parallel()
 
 		logger := loggermock.NewLoggerMock()
 		consumer := buildSequentialConsumer(&configs.SolverConfig{Debug: true}, logger)
+		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+
+		expectedStats := map[string]models.CityStats{
+			builders.TemperatureReadingBuilder_TestCity: {
+				City:    builders.TemperatureReadingBuilder_TestCity,
+				MinTemp: builders.TemperatureReadingBuilder_TestTemperature,
+				MaxTemp: builders.TemperatureReadingBuilder_TestTemperature,
+				// AverageTemp is not calculated until GetStats is called
+				AverageTemp:       0,
+				MeasurementsSum:   2 * builders.TemperatureReadingBuilder_TestTemperature,
+				MeasurementsCount: 2,
+			},
+		}
+
+		consumer.ProcessReading(reading)
+		consumer.ProcessReading(reading)
+		actualStats := consumer.Stats
+		actualRecordsConsumed := consumer.GetRecordsConsumed()
+
+		require.Equal(t, expectedStats, actualStats)
+		require.Equal(t, uint64(2), actualRecordsConsumed)
+		require.Equal(t, uint64(2), logger.GetPrintfCalls())
+	})
+
+	t.Run("successful reading processing - CalculateAverageForEachReading true", func(t *testing.T) {
+		t.Parallel()
+
+		config := &configs.SolverConfig{CalculateAverageForEachReading: true, Debug: true}
+		logger := loggermock.NewLoggerMock()
+		consumer := buildSequentialConsumer(config, logger)
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 
 		expectedStats := map[string]models.CityStats{
@@ -33,7 +63,7 @@ func TestSequentialConsumer_ProcessReading(t *testing.T) {
 
 		consumer.ProcessReading(reading)
 		consumer.ProcessReading(reading)
-		actualStats := consumer.GetStats()
+		actualStats := consumer.Stats
 		actualRecordsConsumed := consumer.GetRecordsConsumed()
 
 		require.Equal(t, expectedStats, actualStats)
