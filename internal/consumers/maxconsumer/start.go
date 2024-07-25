@@ -14,6 +14,5 @@ func (mtc *MaxTempConsumer) Start() {
 		}
 	}
 
-	mtc.Config.Progress.Enabled = false
 	mtc.Logger.Println("done channel closed")
 }

@@ -14,6 +14,5 @@ func (atc *AvgTempConsumer) Start() {
 		}
 	}
 
-	atc.Config.Progress.Enabled = false
 	atc.Logger.Println("done channel closed")
 }

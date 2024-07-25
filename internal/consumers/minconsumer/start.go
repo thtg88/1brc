@@ -13,6 +13,4 @@ func (mtc *MinTempConsumer) Start() {
 			mtc.ProcessReading(reading)
 		}
 	}
-
-	mtc.Config.Progress.Enabled = false
 }

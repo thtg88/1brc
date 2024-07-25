@@ -11,8 +11,6 @@ func (bsc *BufferedSequentialConsumer) Start() {
 		select {
 		case readings, more := <-bsc.DataChannel:
 			if !more {
-				bsc.Config.Progress.Enabled = false
-
 				bsc.Logger.Println("consumer channel closed")
 
 				bsc.calculateAverages()
