@@ -4,7 +4,7 @@ import "sync"
 
 type IOWriterMock struct {
 	sync.Mutex
-	Bytes []byte
+	bytes []byte
 }
 
 func NewIOWriterMock() *IOWriterMock {
@@ -15,11 +15,11 @@ func (w *IOWriterMock) Write(p []byte) (int, error) {
 	w.Lock()
 	defer w.Unlock()
 
-	w.Bytes = append(w.Bytes, p...)
+	w.bytes = append(w.bytes, p...)
 
 	return len(p), nil
 }
 
 func (w *IOWriterMock) GetBytes() []byte {
-	return w.Bytes
+	return w.bytes
 }
