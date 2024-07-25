@@ -9,16 +9,21 @@ import (
 
 type SequentialSolver struct {
 	Config           *configs.SolverConfig
-	ResultsWriter    resultswriters.Writer
 	Logger           loggers.Logger
 	ProgressReporter progressreporters.ProgressReporter
+	ResultsWriter    resultswriters.Writer
 }
 
-func NewSequentialSolver(config *configs.SolverConfig, resultsWriter resultswriters.Writer, logger loggers.Logger) *SequentialSolver {
+func NewSequentialSolver(
+	config *configs.SolverConfig,
+	logger loggers.Logger,
+	progressReporter progressreporters.ProgressReporter,
+	resultsWriter resultswriters.Writer,
+) *SequentialSolver {
 	return &SequentialSolver{
 		Config:           config,
 		Logger:           logger,
-		ProgressReporter: progressreporters.NewLogSleepReporter(logger, config.Progress),
+		ProgressReporter: progressReporter,
 		ResultsWriter:    resultsWriter,
 	}
 }

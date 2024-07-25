@@ -14,11 +14,16 @@ type BufferedSequentialSolver struct {
 	ResultsWriter    resultswriters.Writer
 }
 
-func NewBufferedSequentialSolver(config *configs.SolverConfig, logger loggers.Logger, resultsWriter resultswriters.Writer) *BufferedSequentialSolver {
+func NewBufferedSequentialSolver(
+	config *configs.SolverConfig,
+	logger loggers.Logger,
+	progressReporter progressreporters.ProgressReporter,
+	resultsWriter resultswriters.Writer,
+) *BufferedSequentialSolver {
 	return &BufferedSequentialSolver{
 		Config:           config,
 		Logger:           logger,
-		ProgressReporter: progressreporters.NewLogSleepReporter(logger, config.Progress),
+		ProgressReporter: progressReporter,
 		ResultsWriter:    resultsWriter,
 	}
 }
