@@ -7,11 +7,7 @@ func (mtc *MaxTempConsumer) ProcessReading(reading *models.TemperatureReading) {
 		mtc.Logger.Printf("consuming %v", reading)
 	}
 
-	mtc.Lock()
-	defer func() {
-		mtc.RecordsConsumed++
-		mtc.Unlock()
-	}()
+	defer func() { mtc.RecordsConsumed++ }()
 
 	value, ok := mtc.Stats[reading.City]
 	if !ok {
