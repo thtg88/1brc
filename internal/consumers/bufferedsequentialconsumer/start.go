@@ -2,8 +2,6 @@ package bufferedsequentialconsumer
 
 import (
 	"time"
-
-	"github.com/thtg88/1brc/internal/models"
 )
 
 func (bsc *BufferedSequentialConsumer) Start() {
@@ -12,8 +10,6 @@ func (bsc *BufferedSequentialConsumer) Start() {
 		case readings, more := <-bsc.DataChannel:
 			if !more {
 				bsc.Logger.Println("consumer channel closed")
-
-				bsc.calculateAverages()
 
 				return
 			}
@@ -27,19 +23,6 @@ func (bsc *BufferedSequentialConsumer) Start() {
 			}
 
 			time.Sleep(10 * time.Millisecond)
-		}
-	}
-}
-
-func (bsc *BufferedSequentialConsumer) calculateAverages() {
-	for city, cityStats := range bsc.Stats {
-		bsc.Stats[city] = models.CityStats{
-			City:              city,
-			MinTemp:           cityStats.MinTemp,
-			MaxTemp:           cityStats.MaxTemp,
-			AverageTemp:       cityStats.MeasurementsSum / cityStats.MeasurementsCount,
-			MeasurementsSum:   cityStats.MeasurementsSum,
-			MeasurementsCount: cityStats.MeasurementsCount,
 		}
 	}
 }
