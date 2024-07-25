@@ -65,13 +65,14 @@ func TestSequentialConsumer_GetCities(t *testing.T) {
 		consumer.ProcessReading(reading1)
 		consumer.ProcessReading(reading2)
 
-		expectedCities := []string{
-			builders.TemperatureReadingBuilder_TestCity,
-			anotherCity,
-		}
+		expectedCitiesLength := 2
 
 		actualCities := consumer.GetCities()
 
-		require.Equal(t, expectedCities, actualCities)
+		// We can't use require.Equal as a map does not guarantee the order of the keys
+		// to be the order of insertion to the map
+		require.Len(t, actualCities, expectedCitiesLength)
+		require.Contains(t, actualCities, builders.TemperatureReadingBuilder_TestCity)
+		require.Contains(t, actualCities, anotherCity)
 	})
 }
