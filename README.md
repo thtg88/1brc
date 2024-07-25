@@ -67,4 +67,4 @@ This solution processes 1B rows in ~5m30s.
 
 ## Not Calculating The Average Temperature On Every Reading
 
-In an effort to reduce floating point calculations during consumption of temperature readings, I have attempted to skip those and only leaving that to the end when the final stats are needed. This is regulated by a config variable `CalculateAverageForEachReading bool`. This however does not seem to have any impact on the overall time spent by the 2 solutions above which have similar results time-wise.
+In an effort to reduce floating point calculations during consumption of temperature readings, I have attempted to skip those and only leaving that to the end when the final stats are needed. This is regulated by a config variable `CalculateAverageForEachReading bool`. This however does not seem to have any impact on the overall time spent by the 2 solutions above.
