@@ -9,4 +9,5 @@ import (
 type Solver interface {
 	ProcessTemperatures(file *os.File) []models.CityStats
 	Start()
+	StopProgressReport()
 }

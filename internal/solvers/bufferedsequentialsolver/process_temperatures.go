@@ -23,5 +23,7 @@ func (bss *BufferedSequentialSolver) ProcessTemperatures(file *os.File) []models
 
 	consumer.Start()
 
+	bss.StopProgressReport()
+
 	return consumer.GetSortedStats()
 }

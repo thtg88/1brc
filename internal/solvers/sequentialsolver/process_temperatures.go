@@ -23,5 +23,7 @@ func (ss *SequentialSolver) ProcessTemperatures(file *os.File) []models.CityStat
 
 	consumer.Start()
 
+	ss.StopProgressReport()
+
 	return consumer.GetSortedStats()
 }
