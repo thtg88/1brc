@@ -1,15 +1,12 @@
 package minconsumer
 
 import (
-	"sync"
-
 	"github.com/thtg88/1brc/internal/configs"
 	"github.com/thtg88/1brc/internal/loggers"
 	"github.com/thtg88/1brc/internal/models"
 )
 
 type MinTempConsumer struct {
-	sync.RWMutex
 	Config          *configs.SolverConfig
 	DataChannel     <-chan []*models.TemperatureReading
 	Logger          loggers.Logger
