@@ -19,9 +19,9 @@ func TestMinConsumer_GetStats(t *testing.T) {
 		logger := loggermock.NewLoggerMock()
 		consumer := buildMinConsumer(&configs.SolverConfig{}, logger)
 
-		actualSortedStats := consumer.GetStats()
+		actualStats := consumer.GetStats()
 
-		require.Equal(t, map[string]models.CityStats{}, actualSortedStats)
+		require.Equal(t, map[string]models.CityStats{}, actualStats)
 	})
 
 	t.Run("1 reading returns correct stats", func(t *testing.T) {
@@ -39,9 +39,9 @@ func TestMinConsumer_GetStats(t *testing.T) {
 			},
 		}
 
-		actualSortedStats := consumer.GetStats()
+		actualStats := consumer.GetStats()
 
-		require.Equal(t, expectedSortedStats, actualSortedStats)
+		require.Equal(t, expectedSortedStats, actualStats)
 	})
 
 	t.Run("2 readings for the same city returns correct stats", func(t *testing.T) {
@@ -60,9 +60,9 @@ func TestMinConsumer_GetStats(t *testing.T) {
 			},
 		}
 
-		actualSortedStats := consumer.GetStats()
+		actualStats := consumer.GetStats()
 
-		require.Equal(t, expectedSortedStats, actualSortedStats)
+		require.Equal(t, expectedSortedStats, actualStats)
 	})
 
 	t.Run("2 readings for different cities returns correct stats", func(t *testing.T) {
@@ -86,8 +86,8 @@ func TestMinConsumer_GetStats(t *testing.T) {
 			},
 		}
 
-		actualSortedStats := consumer.GetStats()
+		actualStats := consumer.GetStats()
 
-		require.Equal(t, expectedSortedStats, actualSortedStats)
+		require.Equal(t, expectedSortedStats, actualStats)
 	})
 }

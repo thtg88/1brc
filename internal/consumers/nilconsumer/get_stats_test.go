@@ -17,9 +17,9 @@ func TestNilConsumer_GetStats(t *testing.T) {
 		mockLogger := loggermock.NewLoggerMock()
 		consumer := buildNilConsumer(nil, mockLogger)
 
-		actualSortedStats := consumer.GetStats()
+		actualStats := consumer.GetStats()
 
-		require.Equal(t, map[string]models.CityStats{}, actualSortedStats)
+		require.Equal(t, map[string]models.CityStats{}, actualStats)
 	})
 
 	t.Run("more than 0 readings returns no stats", func(t *testing.T) {
@@ -29,8 +29,8 @@ func TestNilConsumer_GetStats(t *testing.T) {
 		consumer := buildNilConsumer(nil, mockLogger)
 		consumer.ProcessReading(reading)
 
-		actualSortedStats := consumer.GetStats()
+		actualStats := consumer.GetStats()
 
-		require.Equal(t, map[string]models.CityStats{}, actualSortedStats)
+		require.Equal(t, map[string]models.CityStats{}, actualStats)
 	})
 }
