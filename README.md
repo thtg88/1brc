@@ -8,6 +8,10 @@ This repository provides a few possible solutions to the 1BRC problem, as origin
 
 But here they are implemented in Golang (instead of Java).
 
+## Equipment
+
+Tests are performed locally on a MacBook Pro (15-inch, 2016) with a 2.6 GHz Quad-Core Intel Core i7 and 16 GB 2133 MHz LPDDR3.
+
 ## Requirements
 
 Go 1.22. You can install and use it using [gvm](https://github.com/moovweb/gvm) with:
