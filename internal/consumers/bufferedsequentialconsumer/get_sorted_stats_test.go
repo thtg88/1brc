@@ -24,83 +24,169 @@ func TestBufferedSequentialConsumer_GetSortedStats(t *testing.T) {
 		require.Equal(t, []models.CityStats{}, actualSortedStats)
 	})
 
-	t.Run("1 reading returns correct stats", func(t *testing.T) {
+	t.Run("CalculateAverageForEachReading false", func(t *testing.T) {
 		t.Parallel()
 
-		logger := loggermock.NewLoggerMock()
-		consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{}, logger)
-		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
-		consumer.ProcessReading(reading)
+		t.Run("1 reading returns correct stats", func(t *testing.T) {
+			t.Parallel()
 
-		expectedSortedStats := []models.CityStats{
-			{
-				City:              builders.TemperatureReadingBuilder_TestCity,
-				MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
-				MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
-				AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
-				MeasurementsSum:   builders.TemperatureReadingBuilder_TestTemperature,
-				MeasurementsCount: 1,
-			},
-		}
+			logger := loggermock.NewLoggerMock()
+			consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{}, logger)
+			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+			consumer.ProcessReading(reading)
 
-		actualSortedStats := consumer.GetSortedStats()
+			expectedSortedStats := []models.CityStats{
+				{
+					City:              builders.TemperatureReadingBuilder_TestCity,
+					MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsSum:   builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsCount: 1,
+				},
+			}
 
-		require.Equal(t, expectedSortedStats, actualSortedStats)
+			actualSortedStats := consumer.GetSortedStats()
+
+			require.Equal(t, expectedSortedStats, actualSortedStats)
+		})
+
+		t.Run("2 readings for the same city returns correct stats", func(t *testing.T) {
+			t.Parallel()
+
+			logger := loggermock.NewLoggerMock()
+			consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{}, logger)
+			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+			consumer.ProcessReading(reading)
+			consumer.ProcessReading(reading)
+
+			expectedSortedStats := []models.CityStats{
+				{
+					City:              builders.TemperatureReadingBuilder_TestCity,
+					MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsSum:   2 * builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsCount: 2,
+				},
+			}
+
+			actualSortedStats := consumer.GetSortedStats()
+
+			require.Equal(t, expectedSortedStats, actualSortedStats)
+		})
+
+		t.Run("2 readings for different cities returns correct stats", func(t *testing.T) {
+			t.Parallel()
+
+			const anotherCity = "another city"
+			logger := loggermock.NewLoggerMock()
+			consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{}, logger)
+			reading1 := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+			reading2 := builders.NewTemperatureReadingBuilder().WithCity(anotherCity).Build()
+			consumer.ProcessReading(reading1)
+			consumer.ProcessReading(reading2)
+
+			expectedSortedStats := []models.CityStats{
+				{
+					City:              anotherCity,
+					MeasurementsCount: 1,
+				},
+				{
+					City:              builders.TemperatureReadingBuilder_TestCity,
+					MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsSum:   builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsCount: 1,
+				},
+			}
+
+			actualSortedStats := consumer.GetSortedStats()
+
+			require.Equal(t, expectedSortedStats, actualSortedStats)
+		})
 	})
 
-	t.Run("2 readings for the same city returns correct stats", func(t *testing.T) {
-		t.Parallel()
+	t.Run("CalculateAverageForEachReading true", func(t *testing.T) {
+		t.Run("1 reading returns correct stats", func(t *testing.T) {
+			t.Parallel()
 
-		logger := loggermock.NewLoggerMock()
-		consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{}, logger)
-		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
-		consumer.ProcessReading(reading)
-		consumer.ProcessReading(reading)
+			logger := loggermock.NewLoggerMock()
+			consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{CalculateAverageForEachReading: true}, logger)
+			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+			consumer.ProcessReading(reading)
 
-		expectedSortedStats := []models.CityStats{
-			{
-				City:              builders.TemperatureReadingBuilder_TestCity,
-				MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
-				MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
-				AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
-				MeasurementsSum:   2 * builders.TemperatureReadingBuilder_TestTemperature,
-				MeasurementsCount: 2,
-			},
-		}
+			expectedSortedStats := []models.CityStats{
+				{
+					City:              builders.TemperatureReadingBuilder_TestCity,
+					MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsSum:   builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsCount: 1,
+				},
+			}
 
-		actualSortedStats := consumer.GetSortedStats()
+			actualSortedStats := consumer.GetSortedStats()
 
-		require.Equal(t, expectedSortedStats, actualSortedStats)
-	})
+			require.Equal(t, expectedSortedStats, actualSortedStats)
+		})
 
-	t.Run("2 readings for different cities returns correct stats", func(t *testing.T) {
-		t.Parallel()
+		t.Run("2 readings for the same city returns correct stats", func(t *testing.T) {
+			t.Parallel()
 
-		const anotherCity = "another city"
-		logger := loggermock.NewLoggerMock()
-		consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{}, logger)
-		reading1 := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
-		reading2 := builders.NewTemperatureReadingBuilder().WithCity(anotherCity).Build()
-		consumer.ProcessReading(reading1)
-		consumer.ProcessReading(reading2)
+			logger := loggermock.NewLoggerMock()
+			consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{CalculateAverageForEachReading: true}, logger)
+			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+			consumer.ProcessReading(reading)
+			consumer.ProcessReading(reading)
 
-		expectedSortedStats := []models.CityStats{
-			{
-				City:              anotherCity,
-				MeasurementsCount: 1,
-			},
-			{
-				City:              builders.TemperatureReadingBuilder_TestCity,
-				MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
-				MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
-				AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
-				MeasurementsSum:   builders.TemperatureReadingBuilder_TestTemperature,
-				MeasurementsCount: 1,
-			},
-		}
+			expectedSortedStats := []models.CityStats{
+				{
+					City:              builders.TemperatureReadingBuilder_TestCity,
+					MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsSum:   2 * builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsCount: 2,
+				},
+			}
 
-		actualSortedStats := consumer.GetSortedStats()
+			actualSortedStats := consumer.GetSortedStats()
 
-		require.Equal(t, expectedSortedStats, actualSortedStats)
+			require.Equal(t, expectedSortedStats, actualSortedStats)
+		})
+
+		t.Run("2 readings for different cities returns correct stats", func(t *testing.T) {
+			t.Parallel()
+
+			const anotherCity = "another city"
+			logger := loggermock.NewLoggerMock()
+			consumer := buildBufferedSequentialConsumer(&configs.SolverConfig{CalculateAverageForEachReading: true}, logger)
+			reading1 := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
+			reading2 := builders.NewTemperatureReadingBuilder().WithCity(anotherCity).Build()
+			consumer.ProcessReading(reading1)
+			consumer.ProcessReading(reading2)
+
+			expectedSortedStats := []models.CityStats{
+				{
+					City:              anotherCity,
+					MeasurementsCount: 1,
+				},
+				{
+					City:              builders.TemperatureReadingBuilder_TestCity,
+					MinTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					MaxTemp:           builders.TemperatureReadingBuilder_TestTemperature,
+					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsSum:   builders.TemperatureReadingBuilder_TestTemperature,
+					MeasurementsCount: 1,
+				},
+			}
+
+			actualSortedStats := consumer.GetSortedStats()
+
+			require.Equal(t, expectedSortedStats, actualSortedStats)
+		})
 	})
 }

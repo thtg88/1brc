@@ -16,5 +16,11 @@ func (bsc *BufferedSequentialConsumer) ProcessReading(reading *models.Temperatur
 		return
 	}
 
-	bsc.Stats[reading.City] = models.NewCumulativeReadingCityStats(cityStats, reading)
+	if bsc.Config.CalculateAverageForEachReading {
+		bsc.Stats[reading.City] = models.NewCumulativeReadingCityStats(cityStats, reading)
+
+		return
+	}
+
+	bsc.Stats[reading.City] = models.NewCumulativeReadingCityStatsWithoutAverage(cityStats, reading)
 }

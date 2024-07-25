@@ -12,12 +12,9 @@ func (bsc *BufferedSequentialConsumer) GetCityStats(city string) (models.CitySta
 		return models.CityStats{}, fmt.Errorf("%s city stats not found", city)
 	}
 
-	return models.CityStats{
-		City:              city,
-		MinTemp:           cityStats.MinTemp,
-		MaxTemp:           cityStats.MaxTemp,
-		AverageTemp:       cityStats.AverageTemp,
-		MeasurementsSum:   cityStats.MeasurementsSum,
-		MeasurementsCount: cityStats.MeasurementsCount,
-	}, nil
+	if !bsc.Config.CalculateAverageForEachReading {
+		cityStats.AverageTemp = cityStats.MeasurementsSum / cityStats.MeasurementsCount
+	}
+
+	return cityStats, nil
 }

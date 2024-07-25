@@ -3,7 +3,7 @@ package bufferedsequentialconsumer
 import "github.com/thtg88/1brc/internal/models"
 
 func (bsc *BufferedSequentialConsumer) GetSortedStats() []models.CityStats {
-	stats := bsc.Stats
+	stats := bsc.GetStats()
 
 	// Sort cities so that we are inserting stats in city's alphabetical order
 	cities := bsc.GetSortedCities()
