@@ -71,6 +71,20 @@ In an effort to reduce floating point calculations during consumption of tempera
 
 ## Raw File Read Producer Solution
 
+This is contained under the [cmd/1brc-raw-file-read/main.go](cmd/1brc-raw-file-read/main.go) command.
+
+Build it with:
+
+```bash
+go build -o 1brc-raw-file-read cmd/1brc-raw-file-read/main.go
+```
+
+Run it with:
+
+```bash
+./1brc-raw-file-read
+```
+
 This solution changes the main producer to not use native CSV line reading, but to read a set of characters and building the rows there by splitting by new-line character and comma separator.
 
 This solution processes 1B rows in ~3m45s.
