@@ -15,7 +15,7 @@ func NewIntTempParseProcessor() *IntTempParseProcessor {
 
 func (itpp *IntTempParseProcessor) Process(row []string) (*models.TemperatureReading, error) {
 	if len(row) != 2 {
-		return nil, fmt.Errorf("row length not 2: %d", len(row))
+		return nil, fmt.Errorf("row length not 2 (%d): %v", len(row), row)
 	}
 
 	temp, err := parsers.ParseTemperatureInt(row[1])
