@@ -5,6 +5,7 @@ const (
 	DefaultCalculateAverageForEachReading = false
 	DefaultDebug                          = false
 	DefaultLimit                          = 999_999_000
+	DefaultWaitingRecordsSleepDurationMs  = 10
 
 	DefaultStatsFilePath           = "./data/stats.csv"
 	DefaultTemperaturesFilePath    = "./data/temperatures.csv"

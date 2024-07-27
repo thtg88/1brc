@@ -22,7 +22,7 @@ func (sc *SequentialConsumer) Start() {
 				sc.Logger.Println("waiting for readings to be produced")
 			}
 
-			time.Sleep(10 * time.Millisecond)
+			time.Sleep(time.Duration(sc.Config.WaitingRecordsSleepDurationMs) * time.Millisecond)
 		}
 	}
 }

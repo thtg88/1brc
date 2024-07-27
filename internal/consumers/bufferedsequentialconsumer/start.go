@@ -22,7 +22,7 @@ func (bsc *BufferedSequentialConsumer) Start() {
 				bsc.Logger.Println("waiting for readings to be produced")
 			}
 
-			time.Sleep(10 * time.Millisecond)
+			time.Sleep(time.Duration(bsc.Config.WaitingRecordsSleepDurationMs) * time.Millisecond)
 		}
 	}
 }

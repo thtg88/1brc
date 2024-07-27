@@ -21,6 +21,7 @@ type SolverConfig struct {
 	Profile                        *ProfileSolverConfig
 	Progress                       *ProgressSolverConfig
 	SourceFilePath                 string
+	WaitingRecordsSleepDurationMs  uint64
 }
 
 func NewDefaultSolverConfig() *SolverConfig {
@@ -31,6 +32,7 @@ func NewDefaultSolverConfig() *SolverConfig {
 		DestinationFilePath:            DefaultStatsFilePath,
 		Limit:                          DefaultLimit,
 		SourceFilePath:                 DefaultTemperaturesFilePath,
+		WaitingRecordsSleepDurationMs:  DefaultWaitingRecordsSleepDurationMs,
 		Profile: &ProfileSolverConfig{
 			Enabled:           DefaultProfileEnabled,
 			CPUFilePath:       DefaultProfileCPUFilePath,

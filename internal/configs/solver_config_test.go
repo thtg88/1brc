@@ -17,6 +17,7 @@ func TestNewDefaultSolverConfig(t *testing.T) {
 		DestinationFilePath:            configs.DefaultStatsFilePath,
 		Limit:                          configs.DefaultLimit,
 		SourceFilePath:                 configs.DefaultTemperaturesFilePath,
+		WaitingRecordsSleepDurationMs:  configs.DefaultWaitingRecordsSleepDurationMs,
 		Profile: &configs.ProfileSolverConfig{
 			Enabled:           configs.DefaultProfileEnabled,
 			CPUFilePath:       configs.DefaultProfileCPUFilePath,
