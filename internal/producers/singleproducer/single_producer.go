@@ -1,9 +1,8 @@
 package singleproducer
 
 import (
-	"encoding/csv"
-
 	"github.com/thtg88/1brc/internal/configs"
+	"github.com/thtg88/1brc/internal/csvreader"
 	"github.com/thtg88/1brc/internal/csvrowprocessors"
 	"github.com/thtg88/1brc/internal/loggers"
 	"github.com/thtg88/1brc/internal/models"
@@ -11,7 +10,7 @@ import (
 
 type SingleProducer struct {
 	Config          *configs.SolverConfig
-	CSVReader       *csv.Reader
+	CSVReader       csvreader.Reader
 	CSVRowProcessor csvrowprocessors.Processor
 	DataChannel     chan<- *models.TemperatureReading
 	DoneChannel     chan<- bool
@@ -20,7 +19,7 @@ type SingleProducer struct {
 }
 
 func NewSingleProducer(
-	csvReader *csv.Reader,
+	csvReader csvreader.Reader,
 	dataChannel chan<- *models.TemperatureReading,
 	doneChannel chan<- bool,
 	logger loggers.Logger,
