@@ -59,7 +59,7 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
-		require.Equal(t, errors.New("row length not 2: 3"), err)
+		require.Equal(t, errors.New("row length not 2 (3): [test problematic row]"), err)
 	})
 
 	t.Run("invalid temperature returns an error", func(t *testing.T) {
