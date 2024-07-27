@@ -68,3 +68,9 @@ This solution processes 1B rows in ~5m30s.
 ## Not Calculating The Average Temperature On Every Reading
 
 In an effort to reduce floating point calculations during consumption of temperature readings, I have attempted to skip those and only leaving that to the end when the final stats are needed. This is regulated by a config variable `CalculateAverageForEachReading bool`. This however does not seem to have any impact on the overall time spent by the 2 solutions above.
+
+## Raw File Read Producer Solution
+
+This solution changes the main producer to not use native CSV line reading, but to read a set of characters and building the rows there by splitting by new-line character and comma separator.
+
+This solution processes 1B rows in ~3m45s.
