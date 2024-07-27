@@ -35,7 +35,7 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
-		require.Equal(t, errors.New("row length not 2: 0"), err)
+		require.Equal(t, errors.New("row length not 2 (0): []"), err)
 	})
 
 	t.Run("row with length 1 returns an error", func(t *testing.T) {
@@ -47,7 +47,7 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
-		require.Equal(t, errors.New("row length not 2: 1"), err)
+		require.Equal(t, errors.New("row length not 2 (1): [test]"), err)
 	})
 
 	t.Run("row with length 3 returns an error", func(t *testing.T) {
