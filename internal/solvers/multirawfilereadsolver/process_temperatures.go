@@ -15,7 +15,7 @@ import (
 )
 
 func (mrfrs *MultiRawFileReadSolver) ProcessTemperatures(originFile *os.File) ([]models.CityStats, error) {
-	producersCount := int64(runtime.NumCPU() - 2)
+	producersCount := int64(runtime.NumCPU() - 1)
 	consumers := make([]*bufferedsequentialconsumer.BufferedSequentialConsumer, producersCount)
 
 	positions, fileSize, err := mrfrs.calculateProducersPositions(originFile, producersCount)
