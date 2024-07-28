@@ -1,8 +1,8 @@
 package configs
 
 type FilePositioningConfig struct {
-	Enabled      bool
-	FilePosition int64
+	Enabled               bool
+	ReadUntilFilePosition int64
 }
 
 type ProgressSolverConfig struct {
