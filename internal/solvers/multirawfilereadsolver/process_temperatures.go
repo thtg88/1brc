@@ -162,34 +162,6 @@ func (mrfrs *MultiRawFileReadSolver) combineConsumerStats(consumers []*buffereds
 				MeasurementsSum:   sum,
 				MeasurementsCount: count,
 			}
-
-			// 	// if mrfrs.Config.Debug {
-			// 	mrfrs.Logger.Printf("consumer %d: processing %s stats", consumerIdx, cityStats.City)
-
-			// 	// }
-
-			// 	for _, sortedCityStats := range sortedStats {
-			// 		// No point in continuing if the current city is greater than the outer loop's city, as stats are sorted alphabetically
-			// 		if sortedCityStats.City > cityStats.City {
-			// 			// if mrfrs.Config.Debug {
-			// 			// mrfrs.Logger.Printf("consumer %d: %s > %s: breaking", consumerIdx, sortedCityStats.City, cityStats.City)
-			// 			// }
-			// 			break
-			// 		}
-			// 		// At this point the inner loop's city is <= than the outer loop's,
-			// 		// so if the strings are different we want to go to the next iteration
-			// 		if sortedCityStats.City != cityStats.City {
-			// 			// if mrfrs.Config.Debug {
-			// 			// mrfrs.Logger.Printf("consumer %d: %s != %s: continuing", consumerIdx, sortedCityStats.City, cityStats.City)
-			// 			// }
-			// 			continue
-			// 		}
-
-			// 		// if mrfrs.Config.Debug {
-			// 		mrfrs.Logger.Printf("consumer %d: processing %s stats for real", consumerIdx, cityStats.City)
-			// 		// }
-
-			// 	}
 		}
 	}
 
