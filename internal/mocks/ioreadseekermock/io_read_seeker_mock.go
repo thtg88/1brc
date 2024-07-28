@@ -1,4 +1,4 @@
-package ioreadermock
+package ioreadseekermock
 
 import (
 	"errors"
@@ -6,15 +6,15 @@ import (
 	"io"
 )
 
-type IOReaderMock struct {
+type IOReadSeekerMock struct {
 	bytes      []byte
 	forceEOF   bool
 	forceError bool
 	position   uint64
 }
 
-func NewIOReaderMock(bytes []byte, position uint64, forceEOF bool, forceError bool) *IOReaderMock {
-	return &IOReaderMock{
+func NewIOReadSeekerMock(bytes []byte, position uint64, forceEOF bool, forceError bool) *IOReadSeekerMock {
+	return &IOReadSeekerMock{
 		bytes:      bytes,
 		forceEOF:   forceEOF,
 		forceError: forceError,
@@ -22,7 +22,7 @@ func NewIOReaderMock(bytes []byte, position uint64, forceEOF bool, forceError bo
 	}
 }
 
-func (irm *IOReaderMock) Read(p []byte) (n int, err error) {
+func (irm *IOReadSeekerMock) Read(p []byte) (n int, err error) {
 	if irm.forceEOF {
 		return 0, io.EOF
 	}
@@ -46,7 +46,7 @@ func (irm *IOReaderMock) Read(p []byte) (n int, err error) {
 	return n, nil
 }
 
-func (irm *IOReaderMock) Seek(offset int64, whence int) (int64, error) {
+func (irm *IOReadSeekerMock) Seek(offset int64, whence int) (int64, error) {
 	if irm.forceError {
 		return 0, errors.New("forced error")
 	}
