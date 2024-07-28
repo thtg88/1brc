@@ -15,17 +15,18 @@ const (
 )
 
 type RawFileReadProducer struct {
-	Config          *configs.SolverConfig
-	CSVRowProcessor csvrowprocessors.Processor
-	IOReader        io.Reader
-	DataChannel     chan<- []*models.TemperatureReading
-	DoneChannel     chan<- bool
-	Logger          loggers.Logger
-	RecordsProduced uint64
+	Config            *configs.SolverConfig
+	CSVRowProcessor   csvrowprocessors.Processor
+	IOReadSeeker      io.ReadSeeker
+	DataChannel       chan<- []*models.TemperatureReading
+	DoneChannel       chan<- bool
+	Logger            loggers.Logger
+	ReadUntilPosition int64
+	RecordsProduced   uint64
 }
 
 func NewRawFileReadProducer(
-	ioReader io.Reader,
+	ioReadSeeker io.ReadSeeker,
 	dataChannel chan<- []*models.TemperatureReading,
 	doneChannel chan<- bool,
 	logger loggers.Logger,
@@ -34,7 +35,7 @@ func NewRawFileReadProducer(
 	return &RawFileReadProducer{
 		Config:          config,
 		CSVRowProcessor: csvrowprocessors.NewIntTempParseProcessor(),
-		IOReader:        ioReader,
+		IOReadSeeker:    ioReadSeeker,
 		DataChannel:     dataChannel,
 		DoneChannel:     doneChannel,
 		Logger:          logger,

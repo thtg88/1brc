@@ -12,7 +12,7 @@ func (rfrp *RawFileReadProducer) ReadRows(carryover string) ([][]string, string,
 	}
 
 	bytes := make([]byte, rfrp.Config.BufferedChannelSize)
-	n, err := rfrp.IOReader.Read(bytes)
+	n, err := rfrp.IOReadSeeker.Read(bytes)
 	if err != io.EOF && err != nil {
 		return [][]string{}, "", fmt.Errorf("could not read from CSV file: %v", err)
 	}
