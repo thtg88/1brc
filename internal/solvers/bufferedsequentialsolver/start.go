@@ -1,7 +1,6 @@
 package bufferedsequentialsolver
 
 import (
-	"log"
 	"os"
 	"runtime"
 	"runtime/pprof"
@@ -23,7 +22,7 @@ func (bss *BufferedSequentialSolver) Start() {
 	if bss.Config.Profile.Enabled {
 		exeFile, err := os.Create(bss.Config.Profile.ExecutionFilePath)
 		if err != nil {
-			log.Fatal("could not create trace execution profile: ", err)
+			bss.Logger.Fatalf("could not create trace execution profile: %v", err)
 		}
 		defer exeFile.Close()
 		trace.Start(exeFile)
@@ -41,12 +40,12 @@ func (bss *BufferedSequentialSolver) Start() {
 
 		memFile, err := os.Create(bss.Config.Profile.MemoryFilePath)
 		if err != nil {
-			log.Fatal("could not create memory profile: ", err)
+			bss.Logger.Fatalf("could not create memory profile: %v", err)
 		}
 		defer memFile.Close()
 		runtime.GC()
 		if err := pprof.WriteHeapProfile(memFile); err != nil {
-			log.Fatal("could not write memory profile: ", err)
+			bss.Logger.Fatalf("could not write memory profile: %v", err)
 		}
 	}
 
