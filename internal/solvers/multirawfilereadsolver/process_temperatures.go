@@ -31,6 +31,8 @@ func (mrfrs *MultiRawFileReadSolver) ProcessTemperatures(originFile *os.File) ([
 		}
 		defer file.Close()
 
+		mrfrs.Logger.Printf("starting producer and consumer %d", producerNumber)
+
 		dataChannel := make(chan []*models.TemperatureReading, 1)
 		doneChannel := make(chan bool)
 
