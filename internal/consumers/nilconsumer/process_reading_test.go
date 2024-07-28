@@ -18,11 +18,12 @@ func TestNilConsumer_ProcessReading(t *testing.T) {
 		reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 		mockLogger := loggermock.NewLoggerMock()
 		consumer := buildNilConsumer(nil, mockLogger)
-		wantStats := make(map[string]models.CityStats)
-
 		consumer.ProcessReading(reading)
+
+		expectedStats := make(map[string]models.CityStats)
+
 		actualStats := consumer.GetStats()
 
-		require.Equal(t, wantStats, actualStats)
+		require.Equal(t, expectedStats, actualStats)
 	})
 }
