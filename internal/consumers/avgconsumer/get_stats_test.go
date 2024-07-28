@@ -33,7 +33,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 			consumer.ProcessReading(reading)
 
-			expectedSortedStats := map[string]models.CityStats{
+			expectedStats := map[string]models.CityStats{
 				builders.TemperatureReadingBuilder_TestCity: {
 					City:              builders.TemperatureReadingBuilder_TestCity,
 					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
@@ -44,7 +44,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 
 			actualStats := consumer.GetStats()
 
-			require.Equal(t, expectedSortedStats, actualStats)
+			require.Equal(t, expectedStats, actualStats)
 		})
 
 		t.Run("2 readings for the same city returns correct stats", func(t *testing.T) {
@@ -56,7 +56,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 			consumer.ProcessReading(reading)
 			consumer.ProcessReading(reading)
 
-			expectedSortedStats := map[string]models.CityStats{
+			expectedStats := map[string]models.CityStats{
 				builders.TemperatureReadingBuilder_TestCity: {
 					City:              builders.TemperatureReadingBuilder_TestCity,
 					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
@@ -67,7 +67,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 
 			actualStats := consumer.GetStats()
 
-			require.Equal(t, expectedSortedStats, actualStats)
+			require.Equal(t, expectedStats, actualStats)
 		})
 
 		t.Run("2 readings for different cities returns correct stats", func(t *testing.T) {
@@ -81,7 +81,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 			consumer.ProcessReading(reading1)
 			consumer.ProcessReading(reading2)
 
-			expectedSortedStats := map[string]models.CityStats{
+			expectedStats := map[string]models.CityStats{
 				builders.TemperatureReadingBuilder_TestCity: {
 					City:              builders.TemperatureReadingBuilder_TestCity,
 					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
@@ -96,7 +96,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 
 			actualStats := consumer.GetStats()
 
-			require.Equal(t, expectedSortedStats, actualStats)
+			require.Equal(t, expectedStats, actualStats)
 		})
 	})
 
@@ -109,7 +109,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 			reading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 			consumer.ProcessReading(reading)
 
-			expectedSortedStats := map[string]models.CityStats{
+			expectedStats := map[string]models.CityStats{
 				builders.TemperatureReadingBuilder_TestCity: {
 					City:              builders.TemperatureReadingBuilder_TestCity,
 					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
@@ -120,7 +120,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 
 			actualStats := consumer.GetStats()
 
-			require.Equal(t, expectedSortedStats, actualStats)
+			require.Equal(t, expectedStats, actualStats)
 		})
 
 		t.Run("2 readings for the same city returns correct stats", func(t *testing.T) {
@@ -132,7 +132,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 			consumer.ProcessReading(reading)
 			consumer.ProcessReading(reading)
 
-			expectedSortedStats := map[string]models.CityStats{
+			expectedStats := map[string]models.CityStats{
 				builders.TemperatureReadingBuilder_TestCity: {
 					City:              builders.TemperatureReadingBuilder_TestCity,
 					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
@@ -143,7 +143,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 
 			actualStats := consumer.GetStats()
 
-			require.Equal(t, expectedSortedStats, actualStats)
+			require.Equal(t, expectedStats, actualStats)
 		})
 
 		t.Run("2 readings for different cities returns correct stats", func(t *testing.T) {
@@ -157,7 +157,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 			consumer.ProcessReading(reading1)
 			consumer.ProcessReading(reading2)
 
-			expectedSortedStats := map[string]models.CityStats{
+			expectedStats := map[string]models.CityStats{
 				builders.TemperatureReadingBuilder_TestCity: {
 					City:              builders.TemperatureReadingBuilder_TestCity,
 					AverageTemp:       builders.TemperatureReadingBuilder_TestTemperature,
@@ -172,7 +172,7 @@ func TestAvgConsumer_GetStats(t *testing.T) {
 
 			actualStats := consumer.GetStats()
 
-			require.Equal(t, expectedSortedStats, actualStats)
+			require.Equal(t, expectedStats, actualStats)
 		})
 	})
 }
