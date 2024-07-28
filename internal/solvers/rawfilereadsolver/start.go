@@ -27,6 +27,6 @@ func (rfrs *RawFileReadSolver) Start() {
 
 	err = rfrs.ResultsWriter.Write(sortedStats)
 	if err != nil {
-		rfrs.Logger.Fatalf("%v", err)
+		rfrs.Logger.Fatalf("could not write results: %v", err)
 	}
 }
