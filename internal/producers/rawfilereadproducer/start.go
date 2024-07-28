@@ -38,7 +38,7 @@ func (rfrp *RawFileReadProducer) Start() {
 				rfrp.Logger.Printf("producing %v", row)
 			}
 
-			reading, err := rfrp.CSVRowProcessor.Process(row)
+			reading, err := rfrp.CSVRowParser.Parse(row)
 			if err != nil {
 				rfrp.Logger.Fatalf("could not process row %d: %v", rfrp.RecordsProduced+1, err)
 			}

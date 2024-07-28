@@ -1,4 +1,4 @@
-package csvrowprocessors_test
+package csvrowparsers_test
 
 import (
 	"errors"
@@ -7,20 +7,20 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/thtg88/1brc/internal/builders"
-	"github.com/thtg88/1brc/internal/csvrowprocessors"
+	"github.com/thtg88/1brc/internal/csvrowparsers"
 )
 
-func TestIntTempParseProcessor_Process(t *testing.T) {
+func TestIntTempParser_Parse(t *testing.T) {
 	t.Parallel()
 
 	t.Run("successful row process", func(t *testing.T) {
 
-		processor := csvrowprocessors.NewIntTempParseProcessor()
+		parser := csvrowparsers.NewIntTempParser()
 		row := []string{builders.TemperatureReadingBuilder_TestCity, "12.3"}
 
 		expectedReading := builders.NewTemperatureReadingBuilder().WithTestValues().Build()
 
-		actualReading, err := processor.Process(row)
+		actualReading, err := parser.Parse(row)
 
 		require.NoError(t, err)
 		require.Equal(t, expectedReading, actualReading)
@@ -28,10 +28,10 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 	t.Run("empty row returns an error", func(t *testing.T) {
 
-		processor := csvrowprocessors.NewIntTempParseProcessor()
+		parser := csvrowparsers.NewIntTempParser()
 		row := []string{}
 
-		reading, err := processor.Process(row)
+		reading, err := parser.Parse(row)
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
@@ -40,10 +40,10 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 	t.Run("row with length 1 returns an error", func(t *testing.T) {
 
-		processor := csvrowprocessors.NewIntTempParseProcessor()
+		parser := csvrowparsers.NewIntTempParser()
 		row := []string{"test"}
 
-		reading, err := processor.Process(row)
+		reading, err := parser.Parse(row)
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
@@ -52,10 +52,10 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 	t.Run("row with length 3 returns an error", func(t *testing.T) {
 
-		processor := csvrowprocessors.NewIntTempParseProcessor()
+		parser := csvrowparsers.NewIntTempParser()
 		row := []string{"test", "problematic", "row"}
 
-		reading, err := processor.Process(row)
+		reading, err := parser.Parse(row)
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
@@ -64,12 +64,12 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 
 	t.Run("invalid temperature returns an error", func(t *testing.T) {
 
-		processor := csvrowprocessors.NewIntTempParseProcessor()
+		parser := csvrowparsers.NewIntTempParser()
 		row := []string{builders.TemperatureReadingBuilder_TestCity, "not a temperature"}
 
 		expectedErr := errors.New("could not parse temperature: strconv.ParseInt: parsing \"not a temperatue\": invalid syntax")
 
-		reading, err := processor.Process(row)
+		reading, err := parser.Parse(row)
 
 		require.Nil(t, reading)
 		assert.Error(t, err)
@@ -77,10 +77,10 @@ func TestIntTempParseProcessor_Process(t *testing.T) {
 	})
 }
 
-func BenchmarkIntTempParseProcessor_Process(b *testing.B) {
-	processor := csvrowprocessors.NewIntTempParseProcessor()
+func BenchmarkIntTempParser_Parse(b *testing.B) {
+	parser := csvrowparsers.NewIntTempParser()
 	row := []string{builders.TemperatureReadingBuilder_TestCity, "12.3"}
 	for i := 0; i < b.N; i++ {
-		processor.Process(row)
+		parser.Parse(row)
 	}
 }

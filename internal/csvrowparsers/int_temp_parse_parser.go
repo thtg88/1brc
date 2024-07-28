@@ -1,4 +1,4 @@
-package csvrowprocessors
+package csvrowparsers
 
 import (
 	"fmt"
@@ -7,13 +7,13 @@ import (
 	"github.com/thtg88/1brc/internal/parsers"
 )
 
-type IntTempParseProcessor struct{}
+type IntTempParser struct{}
 
-func NewIntTempParseProcessor() *IntTempParseProcessor {
-	return &IntTempParseProcessor{}
+func NewIntTempParser() *IntTempParser {
+	return &IntTempParser{}
 }
 
-func (itpp *IntTempParseProcessor) Process(row []string) (*models.TemperatureReading, error) {
+func (itpp *IntTempParser) Parse(row []string) (*models.TemperatureReading, error) {
 	if len(row) != 2 {
 		return nil, fmt.Errorf("row length not 2 (%d): %v", len(row), row)
 	}

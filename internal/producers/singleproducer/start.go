@@ -37,7 +37,7 @@ func (sp *SingleProducer) Start() {
 			sp.Logger.Printf("producing %v", row)
 		}
 
-		reading, err := sp.CSVRowProcessor.Process(row)
+		reading, err := sp.CSVRowParser.Parse(row)
 		if err != nil {
 			sp.Logger.Fatal(err)
 		}

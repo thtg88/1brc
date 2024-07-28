@@ -29,7 +29,7 @@ func (np *NilProducer) Start() {
 			np.Logger.Printf("producing %v", row)
 		}
 
-		_, err = np.CSVRowProcessor.Process(row)
+		_, err = np.CSVRowParser.Parse(row)
 		if err != nil {
 			np.Logger.Fatal(err)
 		}

@@ -41,7 +41,7 @@ func (mp *BufferedProducer) Start() {
 			mp.Logger.Printf("producing %v", row)
 		}
 
-		reading, err := mp.CSVRowProcessor.Process(row)
+		reading, err := mp.CSVRowParser.Parse(row)
 		if err != nil {
 			mp.Logger.Fatal(err)
 		}

@@ -4,7 +4,7 @@ import (
 	"io"
 
 	"github.com/thtg88/1brc/internal/configs"
-	"github.com/thtg88/1brc/internal/csvrowprocessors"
+	"github.com/thtg88/1brc/internal/csvrowparsers"
 	"github.com/thtg88/1brc/internal/loggers"
 	"github.com/thtg88/1brc/internal/models"
 )
@@ -16,7 +16,7 @@ const (
 
 type RawFileReadProducer struct {
 	Config            *configs.SolverConfig
-	CSVRowProcessor   csvrowprocessors.Processor
+	CSVRowParser      csvrowparsers.Parser
 	IOReadSeeker      io.ReadSeeker
 	DataChannel       chan<- []*models.TemperatureReading
 	DoneChannel       chan<- bool
@@ -33,11 +33,11 @@ func NewRawFileReadProducer(
 	config *configs.SolverConfig,
 ) *RawFileReadProducer {
 	return &RawFileReadProducer{
-		Config:          config,
-		CSVRowProcessor: csvrowprocessors.NewIntTempParseProcessor(),
-		IOReadSeeker:    ioReadSeeker,
-		DataChannel:     dataChannel,
-		DoneChannel:     doneChannel,
-		Logger:          logger,
+		Config:       config,
+		CSVRowParser: csvrowparsers.NewIntTempParser(),
+		IOReadSeeker: ioReadSeeker,
+		DataChannel:  dataChannel,
+		DoneChannel:  doneChannel,
+		Logger:       logger,
 	}
 }
