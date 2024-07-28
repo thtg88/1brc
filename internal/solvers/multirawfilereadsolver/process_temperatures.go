@@ -146,6 +146,8 @@ func (mrfrs *MultiRawFileReadSolver) combineConsumerStats(consumers []*buffereds
 			continue
 		}
 
+		// TODO: this may not work at lower numbers of records consumed,
+		// as not all consumers may have consumed temperature data about all cities
 		for idx, cityStats := range stats {
 			consumerCityStats, err := consumer.GetCityStats(cityStats.City)
 			if err != nil {
