@@ -13,10 +13,6 @@ func (sc *SequentialConsumer) Start() {
 			}
 
 			sc.ProcessReading(reading)
-		case <-sc.DoneChannel:
-			sc.Logger.Println("done channel closed")
-
-			return
 		default:
 			if sc.Config.Debug {
 				sc.Logger.Println("waiting for readings to be produced")

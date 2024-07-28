@@ -34,9 +34,8 @@ func (mrfrs *MultiRawFileReadSolver) ProcessTemperatures(originFile *os.File) ([
 		mrfrs.Logger.Printf("starting producer and consumer %d", producerNumber)
 
 		dataChannel := make(chan []*models.TemperatureReading, 1)
-		doneChannel := make(chan bool)
 
-		consumers[producerNumber] = bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, doneChannel, mrfrs.Logger, mrfrs.Config)
+		consumers[producerNumber] = bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, mrfrs.Logger, mrfrs.Config)
 
 		producerConfig := configs.NewDefaultSolverConfig()
 		producerConfig.FilePositioning.Enabled = true
@@ -47,7 +46,7 @@ func (mrfrs *MultiRawFileReadSolver) ProcessTemperatures(originFile *os.File) ([
 			producerConfig.FilePositioning.ReadUntilFilePosition = positions[producerNumber+1]
 		}
 
-		producer := rawfilereadproducer.NewRawFileReadProducer(file, dataChannel, doneChannel, mrfrs.Logger, producerConfig)
+		producer := rawfilereadproducer.NewRawFileReadProducer(file, dataChannel, mrfrs.Logger, producerConfig)
 
 		go mrfrs.ProgressReporter.ProducerReport(producer)
 		go mrfrs.ProgressReporter.ConsumerReport(consumers[producerNumber])

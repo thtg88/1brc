@@ -13,7 +13,6 @@ type SingleProducer struct {
 	CSVReader       csvreader.Reader
 	CSVRowParser    csvrowparsers.Parser
 	DataChannel     chan<- *models.TemperatureReading
-	DoneChannel     chan<- bool
 	Logger          loggers.Logger
 	RecordsProduced uint64
 }
@@ -21,7 +20,6 @@ type SingleProducer struct {
 func NewSingleProducer(
 	csvReader csvreader.Reader,
 	dataChannel chan<- *models.TemperatureReading,
-	doneChannel chan<- bool,
 	logger loggers.Logger,
 	config *configs.SolverConfig,
 ) *SingleProducer {
@@ -30,7 +28,6 @@ func NewSingleProducer(
 		CSVReader:    csvReader,
 		CSVRowParser: csvrowparsers.NewIntTempParser(),
 		DataChannel:  dataChannel,
-		DoneChannel:  doneChannel,
 		Logger:       logger,
 	}
 }

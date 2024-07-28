@@ -64,7 +64,5 @@ func (mp *BufferedProducer) Start() {
 		mp.DataChannel <- readings[0 : idx-1]
 	}
 
-	// mp.DoneChannel <- true
 	close(mp.DataChannel)
-	// close(mp.DoneChannel)
 }

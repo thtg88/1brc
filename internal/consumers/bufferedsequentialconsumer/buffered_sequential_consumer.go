@@ -9,7 +9,6 @@ import (
 type BufferedSequentialConsumer struct {
 	Config          *configs.SolverConfig
 	DataChannel     <-chan []*models.TemperatureReading
-	DoneChannel     <-chan bool
 	Logger          loggers.Logger
 	RecordsConsumed uint64
 	Stats           map[string]models.CityStats
@@ -17,14 +16,12 @@ type BufferedSequentialConsumer struct {
 
 func NewBufferedSequentialConsumer(
 	dataChannel <-chan []*models.TemperatureReading,
-	doneChannel <-chan bool,
 	logger loggers.Logger,
 	config *configs.SolverConfig,
 ) *BufferedSequentialConsumer {
 	return &BufferedSequentialConsumer{
 		Config:      config,
 		DataChannel: dataChannel,
-		DoneChannel: doneChannel,
 		Logger:      logger,
 		Stats:       make(map[string]models.CityStats),
 	}

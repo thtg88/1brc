@@ -63,7 +63,5 @@ func (rfrp *RawFileReadProducer) Start() {
 		rfrp.DataChannel <- readings
 	}
 
-	// rfrp.DoneChannel <- true
 	close(rfrp.DataChannel)
-	// close(rfrp.DoneChannel)
 }

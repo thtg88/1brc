@@ -139,8 +139,8 @@ func TestLogSleepReporter_Stop(t *testing.T) {
 
 func buildNilConsumer(config *configs.SolverConfig, logger loggers.Logger) *nilconsumer.NilConsumer {
 	dataChannel := make(<-chan *models.TemperatureReading)
-	doneChannel := make(<-chan bool)
-	return nilconsumer.NewNilConsumer(dataChannel, doneChannel, logger, config)
+
+	return nilconsumer.NewNilConsumer(dataChannel, logger, config)
 }
 
 func buildNilConsumerConfig(enabled bool) *configs.SolverConfig {
@@ -154,9 +154,9 @@ func buildNilConsumerConfig(enabled bool) *configs.SolverConfig {
 
 func buildNilProducer(config *configs.SolverConfig, logger loggers.Logger) *nilproducer.NilProducer {
 	dataChannel := make(chan<- *models.TemperatureReading)
-	doneChannel := make(chan<- bool)
 	csvReader := csvreadermock.NewCSVReaderMock()
-	return nilproducer.NewNilProducer(csvReader, dataChannel, doneChannel, logger, config)
+
+	return nilproducer.NewNilProducer(csvReader, dataChannel, logger, config)
 }
 
 func buildNilProducerConfig(enabled bool) *configs.SolverConfig {

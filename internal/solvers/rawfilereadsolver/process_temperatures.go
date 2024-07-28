@@ -10,10 +10,9 @@ import (
 
 func (rfrs *RawFileReadSolver) ProcessTemperatures(file *os.File) ([]models.CityStats, error) {
 	dataChannel := make(chan []*models.TemperatureReading, 1)
-	doneChannel := make(chan bool)
 
-	consumer := bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, doneChannel, rfrs.Logger, rfrs.Config)
-	producer := rawfilereadproducer.NewRawFileReadProducer(file, dataChannel, doneChannel, rfrs.Logger, rfrs.Config)
+	consumer := bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, rfrs.Logger, rfrs.Config)
+	producer := rawfilereadproducer.NewRawFileReadProducer(file, dataChannel, rfrs.Logger, rfrs.Config)
 
 	go rfrs.ProgressReporter.ProducerReport(producer)
 	go rfrs.ProgressReporter.ConsumerReport(consumer)

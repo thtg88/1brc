@@ -77,7 +77,6 @@ func TestBufferedProducer_GetRecordsProduced(t *testing.T) {
 
 func buildBufferedProducer(dataChannel chan []*models.TemperatureReading, limit uint64) *bufferedproducer.BufferedProducer {
 	csvReader := csvreadermock.NewCSVReaderMock()
-	doneChannel := make(chan bool)
 	mockLogger := loggermock.NewLoggerMock()
 	config := &configs.SolverConfig{
 		BufferedChannelSize: configs.DefaultBufferedChannelSize,
@@ -86,5 +85,5 @@ func buildBufferedProducer(dataChannel chan []*models.TemperatureReading, limit 
 		Progress:            &configs.ProgressSolverConfig{},
 	}
 
-	return bufferedproducer.NewBufferedProducer(csvReader, dataChannel, doneChannel, mockLogger, config)
+	return bufferedproducer.NewBufferedProducer(csvReader, dataChannel, mockLogger, config)
 }

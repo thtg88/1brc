@@ -9,6 +9,6 @@ import (
 
 func buildNilConsumer(config *configs.SolverConfig, logger loggers.Logger) *nilconsumer.NilConsumer {
 	dataChannel := make(<-chan *models.TemperatureReading)
-	doneChannel := make(<-chan bool)
-	return nilconsumer.NewNilConsumer(dataChannel, doneChannel, logger, config)
+
+	return nilconsumer.NewNilConsumer(dataChannel, logger, config)
 }

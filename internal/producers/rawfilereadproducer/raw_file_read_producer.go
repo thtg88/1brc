@@ -19,7 +19,6 @@ type RawFileReadProducer struct {
 	CSVRowParser      csvrowparsers.Parser
 	IOReadSeeker      io.ReadSeeker
 	DataChannel       chan<- []*models.TemperatureReading
-	DoneChannel       chan<- bool
 	Logger            loggers.Logger
 	ReadUntilPosition int64
 	RecordsProduced   uint64
@@ -28,7 +27,6 @@ type RawFileReadProducer struct {
 func NewRawFileReadProducer(
 	ioReadSeeker io.ReadSeeker,
 	dataChannel chan<- []*models.TemperatureReading,
-	doneChannel chan<- bool,
 	logger loggers.Logger,
 	config *configs.SolverConfig,
 ) *RawFileReadProducer {
@@ -37,7 +35,6 @@ func NewRawFileReadProducer(
 		CSVRowParser: csvrowparsers.NewIntTempParser(),
 		IOReadSeeker: ioReadSeeker,
 		DataChannel:  dataChannel,
-		DoneChannel:  doneChannel,
 		Logger:       logger,
 	}
 }

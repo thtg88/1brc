@@ -16,10 +16,9 @@ func buildRawFileReadProducer(logger loggers.Logger, bytesCount uint64, initialP
 	rowsBytes := buildRowsBytes()
 	ioReadSeeker := ioreadseekermock.NewIOReadSeekerMock(rowsBytes, initialPosition, forceEOF, forceError)
 	dataChannel := make(chan []*models.TemperatureReading, 1)
-	doneChannel := make(chan bool)
 	config := &configs.SolverConfig{BufferedChannelSize: bytesCount, Debug: debug}
 
-	return rawfilereadproducer.NewRawFileReadProducer(ioReadSeeker, dataChannel, doneChannel, logger, config)
+	return rawfilereadproducer.NewRawFileReadProducer(ioReadSeeker, dataChannel, logger, config)
 }
 
 func buildRowsBytes() []byte {

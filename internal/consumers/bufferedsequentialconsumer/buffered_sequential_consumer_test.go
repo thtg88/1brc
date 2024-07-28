@@ -9,7 +9,6 @@ import (
 
 func buildBufferedSequentialConsumer(config *configs.SolverConfig, logger loggers.Logger) *bufferedsequentialconsumer.BufferedSequentialConsumer {
 	dataChannel := make(<-chan []*models.TemperatureReading)
-	doneChannel := make(<-chan bool)
 
-	return bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, doneChannel, logger, config)
+	return bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, logger, config)
 }

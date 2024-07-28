@@ -52,11 +52,10 @@ func TestBufferedSequentialConsumer_Start(t *testing.T) {
 			t.Parallel()
 
 			dataChannel := make(chan []*models.TemperatureReading)
-			doneChannel := make(chan bool)
 			mockLogger := loggermock.NewLoggerMock()
 			config := buildBufferedSequentialConsumerConfig(tc.expectedRecordsConsumed)
 
-			consumer := bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, doneChannel, mockLogger, config)
+			consumer := bufferedsequentialconsumer.NewBufferedSequentialConsumer(dataChannel, mockLogger, config)
 
 			go func() {
 				readings := make([]*models.TemperatureReading, tc.expectedRecordsConsumed)
@@ -65,10 +64,7 @@ func TestBufferedSequentialConsumer_Start(t *testing.T) {
 				}
 
 				dataChannel <- readings
-
 				close(dataChannel)
-				doneChannel <- true
-				close(doneChannel)
 			}()
 
 			consumer.Start()

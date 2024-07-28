@@ -48,7 +48,5 @@ func (sp *SingleProducer) Start() {
 		rowNumber++
 	}
 
-	sp.DoneChannel <- true
 	close(sp.DataChannel)
-	close(sp.DoneChannel)
 }

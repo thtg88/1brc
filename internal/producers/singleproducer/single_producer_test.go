@@ -11,8 +11,7 @@ import (
 func buildSingleProducer(logger loggers.Logger, debug bool) *singleproducer.SingleProducer {
 	csvReader := csvreadermock.NewCSVReaderMock()
 	dataChannel := make(chan *models.TemperatureReading, 1)
-	doneChannel := make(chan bool)
 	config := &configs.SolverConfig{Debug: debug}
 
-	return singleproducer.NewSingleProducer(csvReader, dataChannel, doneChannel, logger, config)
+	return singleproducer.NewSingleProducer(csvReader, dataChannel, logger, config)
 }

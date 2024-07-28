@@ -11,11 +11,10 @@ import (
 
 func (ss *SequentialSolver) ProcessTemperatures(file *os.File) ([]models.CityStats, error) {
 	dataChannel := make(chan *models.TemperatureReading, ss.Config.BufferedChannelSize)
-	doneChannel := make(chan bool)
 	csvReader := csv.NewReader(file)
 
-	consumer := sequentialconsumer.NewSequentialConsumer(dataChannel, doneChannel, ss.Logger, ss.Config)
-	producer := singleproducer.NewSingleProducer(csvReader, dataChannel, doneChannel, ss.Logger, ss.Config)
+	consumer := sequentialconsumer.NewSequentialConsumer(dataChannel, ss.Logger, ss.Config)
+	producer := singleproducer.NewSingleProducer(csvReader, dataChannel, ss.Logger, ss.Config)
 
 	go ss.ProgressReporter.ProducerReport(producer)
 	go ss.ProgressReporter.ConsumerReport(consumer)

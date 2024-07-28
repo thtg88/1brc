@@ -53,10 +53,9 @@ func TestNilConsumer_Start(t *testing.T) {
 			t.Parallel()
 
 			dataChannel := make(chan *models.TemperatureReading)
-			doneChannel := make(<-chan bool)
 			mockLogger := loggermock.NewLoggerMock()
 			config := buildNilConsumerConfig(tc.expectedRecordsConsumed)
-			consumer := nilconsumer.NewNilConsumer(dataChannel, doneChannel, mockLogger, config)
+			consumer := nilconsumer.NewNilConsumer(dataChannel, mockLogger, config)
 
 			go func() {
 				var wg sync.WaitGroup
@@ -86,10 +85,9 @@ func TestNilConsumer_Start(t *testing.T) {
 
 func BenchmarkNilConsumer_Start(b *testing.B) {
 	dataChannel := make(chan *models.TemperatureReading)
-	doneChannel := make(<-chan bool)
 	mockLogger := loggermock.NewLoggerMock()
 	config := buildNilConsumerConfig(uint64(b.N))
-	consumer := nilconsumer.NewNilConsumer(dataChannel, doneChannel, mockLogger, config)
+	consumer := nilconsumer.NewNilConsumer(dataChannel, mockLogger, config)
 
 	go func() {
 		var wg sync.WaitGroup

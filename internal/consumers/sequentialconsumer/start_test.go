@@ -53,11 +53,10 @@ func TestSequentialConsumer_Start(t *testing.T) {
 			t.Parallel()
 
 			dataChannel := make(chan *models.TemperatureReading)
-			doneChannel := make(chan bool)
 			mockLogger := loggermock.NewLoggerMock()
 			config := buildSequentialConsumerConfig(tc.expectedRecordsConsumed)
 
-			consumer := sequentialconsumer.NewSequentialConsumer(dataChannel, doneChannel, mockLogger, config)
+			consumer := sequentialconsumer.NewSequentialConsumer(dataChannel, mockLogger, config)
 
 			go func() {
 				var wg sync.WaitGroup
@@ -74,8 +73,6 @@ func TestSequentialConsumer_Start(t *testing.T) {
 				wg.Wait()
 
 				close(dataChannel)
-				doneChannel <- true
-				close(doneChannel)
 			}()
 
 			consumer.Start()
