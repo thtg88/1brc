@@ -9,7 +9,7 @@ import (
 	"github.com/thtg88/1brc/internal/producers/singleproducer"
 )
 
-func (ss *SequentialSolver) ProcessTemperatures(file *os.File) []models.CityStats {
+func (ss *SequentialSolver) ProcessTemperatures(file *os.File) ([]models.CityStats, error) {
 	dataChannel := make(chan *models.TemperatureReading, ss.Config.BufferedChannelSize)
 	doneChannel := make(chan bool)
 	csvReader := csv.NewReader(file)
@@ -25,5 +25,5 @@ func (ss *SequentialSolver) ProcessTemperatures(file *os.File) []models.CityStat
 
 	ss.StopProgressReport()
 
-	return consumer.GetSortedStats()
+	return consumer.GetSortedStats(), nil
 }

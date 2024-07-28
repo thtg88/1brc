@@ -16,7 +16,10 @@ func (rfrs *RawFileReadSolver) Start() {
 
 	start := time.Now()
 
-	sortedStats := rfrs.ProcessTemperatures(file)
+	sortedStats, err := rfrs.ProcessTemperatures(file)
+	if err != nil {
+		rfrs.Logger.Fatalf("could not process temperatures: %v", err)
+	}
 
 	end := time.Now()
 

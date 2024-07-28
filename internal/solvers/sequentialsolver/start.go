@@ -16,7 +16,10 @@ func (ss *SequentialSolver) Start() {
 
 	start := time.Now()
 
-	sortedStats := ss.ProcessTemperatures(file)
+	sortedStats, err := ss.ProcessTemperatures(file)
+	if err != nil {
+		ss.Logger.Fatalf("could not process temperatures: %v", err)
+	}
 
 	end := time.Now()
 

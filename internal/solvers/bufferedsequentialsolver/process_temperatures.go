@@ -9,7 +9,7 @@ import (
 	"github.com/thtg88/1brc/internal/producers/bufferedproducer"
 )
 
-func (bss *BufferedSequentialSolver) ProcessTemperatures(file *os.File) []models.CityStats {
+func (bss *BufferedSequentialSolver) ProcessTemperatures(file *os.File) ([]models.CityStats, error) {
 	dataChannel := make(chan []*models.TemperatureReading, 1)
 	doneChannel := make(chan bool)
 	csvReader := csv.NewReader(file)
@@ -25,5 +25,5 @@ func (bss *BufferedSequentialSolver) ProcessTemperatures(file *os.File) []models
 
 	bss.StopProgressReport()
 
-	return consumer.GetSortedStats()
+	return consumer.GetSortedStats(), nil
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/thtg88/1brc/internal/producers/rawfilereadproducer"
 )
 
-func (rfrs *RawFileReadSolver) ProcessTemperatures(file *os.File) []models.CityStats {
+func (rfrs *RawFileReadSolver) ProcessTemperatures(file *os.File) ([]models.CityStats, error) {
 	dataChannel := make(chan []*models.TemperatureReading, 1)
 	doneChannel := make(chan bool)
 
@@ -23,5 +23,5 @@ func (rfrs *RawFileReadSolver) ProcessTemperatures(file *os.File) []models.CityS
 
 	rfrs.StopProgressReport()
 
-	return consumer.GetSortedStats()
+	return consumer.GetSortedStats(), nil
 }

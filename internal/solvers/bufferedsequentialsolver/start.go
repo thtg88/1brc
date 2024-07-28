@@ -49,7 +49,10 @@ func (bss *BufferedSequentialSolver) Start() {
 		}
 	}
 
-	sortedStats := bss.ProcessTemperatures(file)
+	sortedStats, err := bss.ProcessTemperatures(file)
+	if err != nil {
+		bss.Logger.Fatalf("could not process temperatures: %v", err)
+	}
 
 	end := time.Now()
 

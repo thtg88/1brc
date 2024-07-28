@@ -7,7 +7,7 @@ import (
 )
 
 type Solver interface {
-	ProcessTemperatures(file *os.File) []models.CityStats
+	ProcessTemperatures(file *os.File) ([]models.CityStats, error)
 	Start()
 	StopProgressReport()
 }
