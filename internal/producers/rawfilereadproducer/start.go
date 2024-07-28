@@ -1,6 +1,8 @@
 package rawfilereadproducer
 
 import (
+	"io"
+
 	"github.com/thtg88/1brc/internal/models"
 )
 
@@ -11,6 +13,9 @@ func (rfrp *RawFileReadProducer) Start() {
 		if rfrp.RecordsProduced >= rfrp.Config.Limit {
 			break
 		}
+		if rfrp.Config.FilePositioning.Enabled && rfrp.ReadUntilPosition >= rfrp.Config.FilePositioning.ReadUntilFilePosition {
+			break
+		}
 
 		rows, newCarryover, err := rfrp.ReadRows(carryover)
 		if err != nil {
@@ -18,6 +23,14 @@ func (rfrp *RawFileReadProducer) Start() {
 		}
 		if len(rows) == 0 && len(newCarryover) == 0 {
 			break
+		}
+		if rfrp.Config.FilePositioning.Enabled {
+			currentOffset, err := rfrp.IOReadSeeker.Seek(0, io.SeekCurrent)
+			if err != nil {
+				rfrp.Logger.Fatalf("could get current offset: %v", err)
+			}
+
+			rfrp.ReadUntilPosition = currentOffset
 		}
 
 		for _, row := range rows {
