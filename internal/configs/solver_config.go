@@ -1,5 +1,10 @@
 package configs
 
+type FilePositioningConfig struct {
+	Enabled      bool
+	FilePosition int64
+}
+
 type ProgressSolverConfig struct {
 	SleepDurationMs uint64
 	Enabled         bool
@@ -17,6 +22,7 @@ type SolverConfig struct {
 	CalculateAverageForEachReading bool
 	Debug                          bool
 	DestinationFilePath            string
+	FilePositioning                *FilePositioningConfig
 	Limit                          uint64
 	Profile                        *ProfileSolverConfig
 	Progress                       *ProgressSolverConfig
@@ -33,6 +39,9 @@ func NewDefaultSolverConfig() *SolverConfig {
 		Limit:                          DefaultLimit,
 		SourceFilePath:                 DefaultTemperaturesFilePath,
 		WaitingRecordsSleepDurationMs:  DefaultWaitingRecordsSleepDurationMs,
+		FilePositioning: &FilePositioningConfig{
+			Enabled: DefaultFilePositioningEnabled,
+		},
 		Profile: &ProfileSolverConfig{
 			Enabled:           DefaultProfileEnabled,
 			CPUFilePath:       DefaultProfileCPUFilePath,
@@ -40,8 +49,8 @@ func NewDefaultSolverConfig() *SolverConfig {
 			MemoryFilePath:    DefaultProfileMemoryFilePath,
 		},
 		Progress: &ProgressSolverConfig{
-			SleepDurationMs: DefaultProgressSleepDurationMs,
 			Enabled:         DefaultProgressEnabled,
+			SleepDurationMs: DefaultProgressSleepDurationMs,
 		},
 	}
 }

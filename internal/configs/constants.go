@@ -11,6 +11,9 @@ const (
 	DefaultTemperaturesFilePath    = "./data/temperatures.csv"
 	DefaultWeatherStationsFilePath = "./data/weather_stations.csv"
 
+	// File Positioning
+	DefaultFilePositioningEnabled = false
+
 	// Profiling
 	DefaultProfileEnabled           = false
 	DefaultProfileCPUFilePath       = "./profiles/cpuprofile"
