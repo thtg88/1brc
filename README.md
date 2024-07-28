@@ -88,3 +88,23 @@ Run it with:
 This solution changes the main producer to not use native CSV line reading, but to read a set of characters and building the rows there by splitting by new-line character and comma separator.
 
 This solution processes 1B rows in ~3m45s.
+
+## Multi Raw File Read Producer Solution
+
+This is contained under the [cmd/1brc-multi-raw-file-read/main.go](cmd/1brc-multi-raw-file-read/main.go) command.
+
+Build it with:
+
+```bash
+go build -o 1brc-multi-raw-file-read cmd/1brc-multi-raw-file-read/main.go
+```
+
+Run it with:
+
+```bash
+./1brc-multi-raw-file-read
+```
+
+This solution builds on top of the previous solution, by adding concurrency, and having a number of producers reading at different position of the file. Each producer has its own consumer, and stats are then pulled from each consumer and combined at the end.
+
+This solution processes 1B rows in ~1m55s.
