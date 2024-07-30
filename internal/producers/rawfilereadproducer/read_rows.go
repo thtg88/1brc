@@ -40,8 +40,7 @@ func (rfrp *RawFileReadProducer) ReadRows(carryover string) ([][]string, string,
 	rawRows := strings.Split(actualData, NewLineSeparator)
 	rows := make([][]string, len(rawRows))
 	for idx, rawRow := range rawRows {
-		row := strings.Split(rawRow, CommaSeparator)
-		rows[idx] = row
+		rows[idx] = strings.Split(rawRow, CommaSeparator)
 	}
 
 	return rows, newCarryover, nil

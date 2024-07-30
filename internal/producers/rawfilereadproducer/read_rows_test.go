@@ -12,7 +12,7 @@ import (
 	"github.com/thtg88/1brc/internal/producers/rawfilereadproducer"
 )
 
-func TestRawFileReadProduer_ReadRows(t *testing.T) {
+func TestRawFileReadProducer_ReadRows(t *testing.T) {
 	t.Parallel()
 
 	t.Run("successful read", func(t *testing.T) {
